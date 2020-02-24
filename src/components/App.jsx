@@ -18,9 +18,8 @@ const mapStateToProps = state => {
 const App = ({ auth }) => (
 	<Router>
 		<div>
-			<Navigation
-				style={!auth.isEmpty ? { display: 'flex' } : { display: 'none' }}
-			/>
+			{!auth.isEmpty ? <Navigation /> : <p>Welcome</p>}
+
 			<hr />
 			<Route path={ROUTES.HOME} component={Home} />
 			<Route exact path={ROUTES.LANDING} component={Landing} />
