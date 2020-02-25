@@ -8,7 +8,7 @@ import {
 	RESET_SUCCESS,
 	RESET_ERROR,
 } from './types';
-import firebase from '../../services/firebase';
+import firebase from '../services/firebase';
 
 export const signup = (email, password) => async dispatch => {
 	try {
@@ -55,6 +55,7 @@ export const signup = (email, password) => async dispatch => {
 
 export const signin = (email, password, callback) => async dispatch => {
 	try {
+		console.log(email + ' - ' + password);
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)

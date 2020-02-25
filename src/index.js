@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 import firebase from './services/firebase';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
 
 const rrfConfig = { userProfile: 'users' };
 
@@ -17,7 +18,7 @@ const rrfProps = {
 	firebase,
 	config: rrfConfig,
 	dispatch: store.dispatch,
-	// createFirestoreInstance // <- needed if using firestore
+	createFirestoreInstance,
 };
 
 ReactDOM.render(
