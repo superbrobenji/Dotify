@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signin } from '../../actions/auth';
+import { resetPassword } from '../../actions/auth';
 import { useHistory } from 'react-router-dom';
 
 import clsx from 'clsx';
@@ -15,14 +16,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
-const mapStateToProps = state => ({
-	...state,
-});
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
 const mapDispatchToProps = dispatch => ({
 	signin: (email, password, callback) =>
 		dispatch(signin(email, password, callback)),
+	resetPassword: email => dispatch(resetPassword(email)),
 });
 
 const useStyles = makeStyles(theme => ({
@@ -47,7 +51,9 @@ const SignIn = props => {
 	const [values, setValues] = React.useState({
 		email: '',
 		password: '',
+		recoveryEmail: '',
 	});
+	const [open, setOpen] = React.useState(false);
 
 	const handleChange = prop => event => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -67,6 +73,19 @@ const SignIn = props => {
 
 	const signUp = () => {
 		history.push('/signup');
+	};
+
+	const reset_password = () => {
+		props.resetPassword(values.recoveryEmail);
+		handleClose();
+	};
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
 	};
 
 	return (
@@ -108,8 +127,41 @@ const SignIn = props => {
 				<Button variant='contained' color='primary' onClick={signUp}>
 					Sign Up
 				</Button>
+				<Button variant='contained' color='primary' onClick={handleClickOpen}>
+					Reset Password
+				</Button>
+				<Dialog
+					open={open}
+					onClose={handleClose}
+					aria-labelledby='form-dialog-title'
+				>
+					<DialogTitle id='form-dialog-title'>Reset Your Password</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Please enter your account email.
+						</DialogContentText>
+						<FormControl className={clsx(classes.margin, classes.textField)}>
+							<InputLabel htmlFor='standard-with-icon-adornment'>
+								Email
+							</InputLabel>
+							<Input
+								id='input-with-icon-adornment'
+								value={values.recoveryEmail}
+								onChange={handleChange('recoveryEmail')}
+							/>
+						</FormControl>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleClose} color='primary'>
+							Cancel
+						</Button>
+						<Button onClick={reset_password} color='primary'>
+							Send Email
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</CardContent>
 		</Card>
 	);
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(null, mapDispatchToProps)(SignIn);

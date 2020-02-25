@@ -10,7 +10,7 @@ import {
 } from './types';
 import firebase from '../services/firebase';
 
-export const signup = (email, password, callback) => async dispatch => {
+export const signup = (email, password) => async dispatch => {
 	try {
 		firebase
 			.auth()
@@ -28,7 +28,6 @@ export const signup = (email, password, callback) => async dispatch => {
 							payload:
 								'Your account was successfully created! Now you need to verify your e-mail address, please go check your inbox.',
 						});
-						callback();
 					} else {
 						dispatch({
 							type: SIGNUP_ERROR,

@@ -14,13 +14,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 
-const mapStateToProps = state => ({
-	...state,
-});
-
 const mapDispatchToProps = dispatch => ({
-	signup: (email, password, callback) =>
-		dispatch(signup(email, password, callback)),
+	signup: (email, password) => dispatch(signup(email, password)),
 });
 
 const useStyles = makeStyles(theme => ({
@@ -66,7 +61,7 @@ const SignUp = props => {
 
 	const signUp = () => {
 		if (values.password === values.passwordVer) {
-			props.signup(values.email, values.password, () => history.push('/home'));
+			props.signup(values.email, values.password).then(history.push('/home'));
 		} else {
 			console.log('passwords did not match');
 		}
@@ -107,7 +102,9 @@ const SignUp = props => {
 				/>
 			</FormControl>
 			<FormControl className={clsx(classes.margin, classes.textField)}>
-				<InputLabel htmlFor='standard-adornment-password'>Password</InputLabel>
+				<InputLabel htmlFor='standard-adornment-password'>
+					Re-enter Password
+				</InputLabel>
 				<Input
 					id='standard-adornment-password'
 					type={values.showPasswordVer ? 'text' : 'password'}
@@ -138,4 +135,4 @@ const SignUp = props => {
 		</div>
 	);
 };
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(SignUp);
