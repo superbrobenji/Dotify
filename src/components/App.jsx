@@ -7,25 +7,27 @@ import SignUp from './auth/SignUp';
 import SignIn from './auth/SignIn';
 import Home from './Home';
 import Landing from './Landing';
+import Account from './Account';
+import Genres from './Genres';
+import Artists from './Artists';
+
 import * as ROUTES from '../router/routes';
 
 const mapStateToProps = state => {
 	return {
-		auth: state.firebaseReducer.auth,
+		isEmpty: state.firebaseReducer.auth.isEmpty,
 	};
 };
 
-const App = ({ auth }) => (
+const App = ({ isEmpty }) => (
 	<Router>
-		<div>
-			{!auth.isEmpty ? <Navigation /> : <p>Welcome</p>}
-
-			<hr />
-			<Route path={ROUTES.HOME} component={Home} />
-			<Route exact path={ROUTES.LANDING} component={Landing} />
-			<Route path={ROUTES.SIGN_IN} component={SignIn} />
-			<Route path={ROUTES.SIGN_UP} component={SignUp} />
-		</div>
+		<Route path={ROUTES.HOME} component={Home} />
+		<Route exact path={ROUTES.LANDING} component={Landing} />
+		<Route path={ROUTES.SIGN_IN} component={SignIn} />
+		<Route path={ROUTES.SIGN_UP} component={SignUp} />
+		<Route path={ROUTES.ACCOUNT} component={Account} />
+		<Route path={ROUTES.ARTISTS} component={Artists} />
+		<Route path={ROUTES.GENRES} component={Genres} />
 	</Router>
 );
 export default connect(mapStateToProps)(App);
