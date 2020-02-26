@@ -5,6 +5,7 @@ import requireAuth from './hoc/requireAuth';
 
 import Loader from './Loader';
 import Navigation from './Navigation';
+
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
 });
@@ -13,14 +14,17 @@ const mapDispatchToProps = dispatch => ({
 	dummyAction: () => dispatch(dummyAction()),
 });
 
-const Home = props => {
+const Genres = props => {
 	return props.isLoaded ? (
 		<div>
-			<Navigation /> this is Home
+			<Navigation /> this is Genres
 		</div>
 	) : (
 		<Loader />
 	);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(requireAuth(Home));
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(requireAuth(Genres));

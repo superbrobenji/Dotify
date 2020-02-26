@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signup } from '../../actions/auth';
+import { signup, signout } from '../../actions/auth';
 
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,6 +16,7 @@ import Button from '@material-ui/core/Button';
 
 const mapDispatchToProps = dispatch => ({
 	signup: (email, password) => dispatch(signup(email, password)),
+	signout: () => dispatch(signout()),
 });
 
 const useStyles = makeStyles(theme => ({
@@ -61,7 +62,9 @@ const SignUp = props => {
 
 	const signUp = () => {
 		if (values.password === values.passwordVer) {
-			props.signup(values.email, values.password).then(history.push('/home'));
+			props
+				.signup(values.email, values.password)
+				.then(history.push('/CreateAccount'));
 		} else {
 			console.log('passwords did not match');
 		}

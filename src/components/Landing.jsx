@@ -4,17 +4,14 @@ import Home from './Home';
 import SignIn from './auth/SignIn';
 import Loader from './Loader';
 
-const Landing = ({ auth }) => {
-	return (
-		<div>
-			{!auth.isLoaded ? <Loader /> : !auth.isEmpty ? <Home /> : <SignIn />}
-		</div>
-	);
+const Landing = ({ isLoaded, isEmpty }) => {
+	return <div>{!isLoaded ? <Loader /> : !isEmpty ? <Home /> : <SignIn />}</div>;
 };
 
 const mapStateToProps = state => {
 	return {
-		auth: state.firebaseReducer.auth,
+		isLoaded: state.firebaseReducer.auth.isLoaded,
+		isEmpty: state.firebaseReducer.auth.isEmpty,
 	};
 };
 

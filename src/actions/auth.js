@@ -21,27 +21,10 @@ export const signup = (email, password) => async dispatch => {
 				});
 			})
 			.then(dataAfterEmail => {
-				firebase.auth().onAuthStateChanged(function(user) {
-					if (user.emailVerified) {
-						dispatch({
-							type: SIGNUP_SUCCESS,
-							payload:
-								'Your account was successfully created! Now you need to verify your e-mail address, please go check your inbox.',
-						});
-					} else {
-						dispatch({
-							type: SIGNUP_ERROR,
-							payload:
-								"Something went wrong, we couldn't create your account. Please try again.",
-						});
-					}
-				});
-			})
-			.catch(function(error) {
 				dispatch({
-					type: SIGNUP_ERROR,
+					type: SIGNUP_SUCCESS,
 					payload:
-						"Something went wrong, we couldn't create your account. Please try again.",
+						'Your account was successfully created! Now you need to verify your e-mail address, please go check your inbox.',
 				});
 			});
 	} catch (err) {
