@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import SignUp from './auth/SignUp';
 import SignIn from './auth/SignIn';
@@ -9,16 +8,11 @@ import Landing from './Landing';
 import Account from './Account';
 import Genres from './Genres';
 import Artists from './Artists';
+import CreateAccount from './CreateAccount';
 
 import * as ROUTES from '../router/routes';
 
-const mapStateToProps = state => {
-	return {
-		isEmpty: state.firebaseReducer.auth.isEmpty,
-	};
-};
-
-const App = ({ isEmpty }) => (
+const App = () => (
 	<Router>
 		<Route path={ROUTES.HOME} component={Home} />
 		<Route exact path={ROUTES.LANDING} component={Landing} />
@@ -27,6 +21,7 @@ const App = ({ isEmpty }) => (
 		<Route path={ROUTES.ACCOUNT} component={Account} />
 		<Route path={ROUTES.ARTISTS} component={Artists} />
 		<Route path={ROUTES.GENRES} component={Genres} />
+		<Route path={ROUTES.CREATEACCOUNT} component={CreateAccount} />
 	</Router>
 );
-export default connect(mapStateToProps)(App);
+export default App;

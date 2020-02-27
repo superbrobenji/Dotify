@@ -62,9 +62,7 @@ const SignUp = props => {
 
 	const signUp = () => {
 		if (values.password === values.passwordVer) {
-			props
-				.signup(values.email, values.password)
-				.then(history.push('/CreateAccount'));
+			props.signup(values.email, values.password).then(history.push('/signin'));
 		} else {
 			console.log('passwords did not match');
 		}
