@@ -38,7 +38,6 @@ export const signup = (email, password) => async dispatch => {
 
 export const signin = (email, password, callback) => async dispatch => {
 	try {
-		console.log(email + ' - ' + password);
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)

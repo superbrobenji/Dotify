@@ -1,20 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { dummyAction } from '../actions/dummyAction';
+import { uploadArtistImage } from '../actions/profile';
 import requireAuth from './hoc/requireAuth';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
 
 import Loader from './Loader';
 
+const useStyles = makeStyles(theme => ({
+	root: {
+		'& > *': {
+			margin: theme.spacing(1),
+		},
+	},
+	input: {
+		display: 'none',
+	},
+}));
+
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
+	imageUrl: state.user.imageUrl,
+	uid: state.firebaseReducer.auth.uid,
 });
 
 const mapDispatchToProps = dispatch => ({
-	dummyAction: () => dispatch(dummyAction()),
+	uploadArtistImage: (image, uid) => dispatch(uploadArtistImage(image, uid)),
 });
 
 const CreateAccount = props => {
-	return props.isLoaded ? <div>this is CreateAccount</div> : <Loader />;
+	const [user, setUser] = useState({ name: '', surname: '' });
+	const classes = useStyles();
+
+	const handleFromChange = prop => event => {
+		setUser({ ...user, [prop]: event.target.value });
+	};
+
+	const submitForm = () => {
+		//TODO send data to db and redux and redirect to home.
+	};
+
+	const handleImageChange = async event => {
+		const image = event.target.files[0];
+
+		console.log('triggering redux');
+		props.uploadArtistImage(image, props.uid);
+	};
+	return props.isLoaded ? (
+		<div className={classes.root}>
+			<Avatar alt='' src={props.imageUrl} />
+			<input
+				accept='image/*'
+				className={classes.input}
+				id='contained-button-file'
+				type='file'
+				onChange={handleImageChange}
+			/>
+			<label htmlFor='contained-button-file'>
+				<Button variant='contained' color='primary' component='span'>
+					Upload
+				</Button>
+			</label>
+			<form className={classes.root} noValidate autoComplete='off'>
+				<TextField
+					id='standard-basic'
+					label='Name'
+					value={user.name}
+					onChange={handleFromChange('name')}
+				/>
+				<TextField
+					id='standard-basic'
+					label='Surname'
+					value={user.surname}
+					onChange={handleFromChange('surname')}
+				/>
+				<Button variant='contained' color='primary' onClick={submitForm}>
+					submit
+				</Button>
+			</form>
+		</div>
+	) : (
+		<Loader />
+	);
 };
 
 export default connect(

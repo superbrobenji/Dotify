@@ -5,3 +5,4 @@ export const LANDING = '/';
 export const ACCOUNT = '/account';
 export const GENRES = '/genres';
 export const ARTISTS = '/artists';
+export const CREATEACCOUNT = '/createaccount';
