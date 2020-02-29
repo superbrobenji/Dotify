@@ -6,6 +6,24 @@ import Navigation from './Navigation';
 import AlbumCard from '../templates/AlbumCard';
 
 import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+	root: {
+		display: 'flex',
+		'& > *': {
+			margin: theme.spacing(1),
+		},
+	},
+	small: {
+		width: theme.spacing(3),
+		height: theme.spacing(3),
+	},
+	large: {
+		width: theme.spacing(20),
+		height: theme.spacing(20),
+	},
+}));
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -17,21 +35,27 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Account = props => {
+	const classes = useStyles();
+
+	const handleAlbums = components => {
+		setAlbumsComp(components);
+	};
+
 	const [albumsComp, setAlbumsComp] = useState();
 	useEffect(() => {
 		if (props.user.albums.length !== 0) {
 			let albumsComponents = [];
 			props.user.albums.forEach(album => {
 				//TODO don't do this make a album prototype
-				albumsComponents.push(<AlbumCard album={album} />);
-				setAlbumsComp(albumsComponents);
+				albumsComponents.push(<AlbumCard album={album} key={album.id} />);
+				handleAlbums(albumsComponents);
 			});
 		}
-	}, [albumsComp, props.user.albums]);
+	}, [props.user.albums]);
 	return (
 		<div>
 			<Navigation />
-			<Avatar alt='' src={props.user.imageUrl} />
+			<Avatar alt='' src={props.user.imageUrl} className={classes.large} />
 			<h3>{props.user.name}</h3>
 			<h3>{props.user.surname}</h3>
 
