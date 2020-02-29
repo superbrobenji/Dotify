@@ -11,6 +11,8 @@ import {
 	SIGNOUT_ERROR,
 	SIGNIN_ERROR,
 	LOAD_USER_ALBUMS,
+	UPLOAD_ALBUM,
+	UPLOAD_ALBUM_ERROR,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -51,12 +53,23 @@ export default (state = {}, action) => {
 				createdProfile: true,
 				isLoading: false,
 			};
+		case UPLOAD_ALBUM:
+			return {
+				...state,
+				albums: [...state.user.albums, action.payload],
+				isLoading: false,
+			};
 		case UPLOAD_IMAGE_ERROR:
 			return {
 				...state,
 				isLoading: false,
 			};
 		case UPLOAD_USER_ERROR:
+			return {
+				...state,
+				isLoading: false,
+			};
+		case UPLOAD_ALBUM_ERROR:
 			return {
 				...state,
 				isLoading: false,

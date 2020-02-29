@@ -48,7 +48,7 @@ const AlbumCard = props => {
 					<h2>{props.album.albumName}</h2>
 				</div>
 				<div>
-					{' '}
+					<p>genre: {props.album.genre}</p>{' '}
 					<p>Songs: {props.album.songCount}</p>
 				</div>
 			</CardContent>

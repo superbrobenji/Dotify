@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { dummyAction } from '../actions/dummyAction';
+import { uploadAlbum } from '../actions/albums';
 import requireAuth from './hoc/requireAuth';
 import Navigation from './Navigation';
 import AlbumCard from '../templates/AlbumCard';
@@ -35,10 +35,11 @@ const useStyles = makeStyles(theme => ({
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
 	user: state.user,
+	uid: state.firebaseReducer.auth.uid,
 });
 
 const mapDispatchToProps = dispatch => ({
-	dummyAction: () => dispatch(dummyAction()),
+	uploadAlbum: albumData => dispatch(uploadAlbum(albumData)),
 });
 
 const Account = props => {
@@ -56,8 +57,9 @@ const Account = props => {
 	const classes = useStyles();
 	const [albumsComp, setAlbumsComp] = useState();
 	const [newAlbum, setNewAlbum] = useState({
-		coverImage: '',
 		albumName: '',
+		artist: props.uid,
+		genre: '',
 	});
 
 	const [nameOpen, setNameOpen] = React.useState(false);
@@ -67,20 +69,20 @@ const Account = props => {
 		setNewAlbum({ ...newAlbum, [prop]: event.target.value });
 	};
 
-	const handleClickOpen = id => {
-		if (id === 0) {
-			setNameOpen(true);
-		} else if (id === 1) {
-			setImageOpen(true);
-		}
+	const handleClickOpenName = id => {
+		setNameOpen(true);
 	};
 
-	const handleClose = id => {
-		if (id === 0) {
-			setNameOpen(false);
-		} else if (id === 1) {
-			setImageOpen(false);
-		}
+	const handleClickOpenImage = () => {
+		setImageOpen(true);
+	};
+
+	const handleCloseImage = () => {
+		setImageOpen(false);
+	};
+
+	const handleCloseName = () => {
+		setNameOpen(false);
 	};
 
 	const handleAlbums = components => {
@@ -89,7 +91,7 @@ const Account = props => {
 
 	const submitForm = () => {
 		//TODO open dialog for image
-		handleClose(0);
+		handleCloseName();
 		props.uploadAlbum(newAlbum);
 	};
 
@@ -103,37 +105,43 @@ const Account = props => {
 			<div>
 				<h2>Albums</h2>
 				{albumsComp}
-				<Button variant='outlined' color='primary' onClick={handleClickOpen(0)}>
+				<Button
+					variant='outlined'
+					color='primary'
+					onClick={handleClickOpenName}
+				>
 					Create Album
 				</Button>
 			</div>
 			<Dialog
 				open={nameOpen}
-				onClose={handleClose(0)}
+				onClose={handleCloseName}
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
 			>
 				<DialogTitle id='alert-dialog-title'>{'Create new album'}</DialogTitle>
 				<DialogContent>
-					<DialogContentText id='alert-dialog-description'>
-						Let Google help apps determine location. This means sending
-						anonymous location data to Google, even when no apps are running.
-					</DialogContentText>
 					<form className={classes.root} noValidate autoComplete='off'>
 						<TextField
 							id='standard-basic'
-							label='Name'
+							label='Album name'
 							value={newAlbum.albumName}
-							onChange={handleFromChange('name')}
+							onChange={handleFromChange('albumName')}
+						/>
+						<TextField
+							id='standard-basic'
+							label='genre'
+							value={newAlbum.genre}
+							onChange={handleFromChange('genre')}
 						/>
 					</form>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose(0)} color='primary'>
+					<Button onClick={handleCloseName} color='primary'>
 						cancel
 					</Button>
 					<Button onClick={submitForm} color='primary' autoFocus>
-						Agree
+						create
 					</Button>
 				</DialogActions>
 			</Dialog>
