@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import Loader from '../Loader';
 
 export default ChildComponent => {
 	const ComposedComponent = props => {
 		useEffect(() => {
-			if (props.auth.isLoaded && props.auth.isEmpty)
+			console.log(Object.entries(props.user).length);
+			if (props.auth.isLoaded && props.auth.isEmpty) {
 				return props.history.push('/');
-		}, [props.auth, props.history]);
+			}
+			//TODO something wrong here
+		}, [props.auth, props.history, props.user]);
 
-		return <ChildComponent {...props} />;
+		return props.user.isLoading ? <Loader /> : <ChildComponent {...props} />;
 	};
 
 	function mapStateToProps(state) {
 		return {
 			auth: state.firebaseReducer.auth,
+			user: state.user,
 		};
 	}
 

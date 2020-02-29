@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { uploadArtistImage } from '../actions/profile';
+import { uploadArtistImage, uploadUserData } from '../actions/profile';
 import requireAuth from './hoc/requireAuth';
+import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -25,14 +26,18 @@ const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
 	imageUrl: state.user.imageUrl,
 	uid: state.firebaseReducer.auth.uid,
+	isloading: state.user.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
 	uploadArtistImage: (image, uid) => dispatch(uploadArtistImage(image, uid)),
+	uploadUserData: (userData, callback) =>
+		dispatch(uploadUserData(userData, callback)),
 });
 
 const CreateAccount = props => {
-	const [user, setUser] = useState({ name: '', surname: '' });
+	const history = useHistory();
+	const [user, setUser] = useState({ name: '', surname: '', uid: props.uid });
 	const classes = useStyles();
 
 	const handleFromChange = prop => event => {
@@ -41,6 +46,7 @@ const CreateAccount = props => {
 
 	const submitForm = () => {
 		//TODO send data to db and redux and redirect to home.
+		props.uploadUserData(user, () => history.push('/home'));
 	};
 
 	const handleImageChange = async event => {
@@ -51,7 +57,7 @@ const CreateAccount = props => {
 	};
 	return props.isLoaded ? (
 		<div className={classes.root}>
-			<Avatar alt='' src={props.imageUrl} />
+			{props.isLoading ? <Loader /> : <Avatar alt='' src={props.imageUrl} />}
 			<input
 				accept='image/*'
 				className={classes.input}

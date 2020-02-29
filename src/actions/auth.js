@@ -7,10 +7,12 @@ import {
 	SIGNOUT_ERROR,
 	RESET_SUCCESS,
 	RESET_ERROR,
+	LOADING_ARTIST,
 } from './types';
 import firebase from '../services/firebase';
 
 export const signup = (email, password) => async dispatch => {
+	dispatch({ type: LOADING_ARTIST });
 	try {
 		firebase
 			.auth()
@@ -37,13 +39,14 @@ export const signup = (email, password) => async dispatch => {
 };
 
 export const signin = (email, password, callback) => async dispatch => {
+	dispatch({ type: LOADING_ARTIST });
 	try {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(() => {
+			.then(data => {
 				dispatch({ type: SIGNIN_SUCCESS });
-				callback();
+				callback(data.user.uid);
 			})
 			.catch(() => {
 				dispatch({
@@ -57,6 +60,7 @@ export const signin = (email, password, callback) => async dispatch => {
 };
 
 export const signout = () => async dispatch => {
+	dispatch({ type: LOADING_ARTIST });
 	try {
 		firebase
 			.auth()

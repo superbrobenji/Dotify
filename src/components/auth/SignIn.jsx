@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { signin } from '../../actions/auth';
-import { resetPassword } from '../../actions/auth';
+import { signin, resetPassword } from '../../actions/auth';
+import { startup } from '../../actions/startup';
 import { useHistory } from 'react-router-dom';
 
 import clsx from 'clsx';
@@ -26,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
 	signin: (email, password, callback) =>
 		dispatch(signin(email, password, callback)),
 	resetPassword: email => dispatch(resetPassword(email)),
+	startup: uid => dispatch(startup(uid)),
 });
 
 const useStyles = makeStyles(theme => ({
@@ -67,7 +68,10 @@ const SignIn = props => {
 	};
 
 	const signIn = () => {
-		props.signin(values.email, values.password, () => history.push('/home'));
+		props.signin(values.email, values.password, uid => {
+			props.startup(uid);
+			history.push('/home');
+		});
 	};
 
 	const signUp = () => {
