@@ -1,6 +1,6 @@
 import firebase from '../services/firebase';
 import { LOAD_USER, LOADING_ARTIST, LOAD_USER_ALBUMS } from './types';
-import Axios from 'axios';
+import axios from 'axios';
 export const startup = uid => async dispatch => {
 	dispatch({ type: LOADING_ARTIST });
 	//TODO get account info of user.
@@ -32,11 +32,13 @@ export const startup = uid => async dispatch => {
 				},
 			});
 		});
-	Axios.get(
-		'https://us-central1-dotify-eb26e.cloudfunctions.net/api/getuseralbums',
-		{ params: { uid: uid } },
-	).then(res => {
-		console.log(res.data);
-		dispatch({ type: LOAD_USER_ALBUMS, payload: res.data });
-	});
+	axios
+		.get(
+			'https://us-central1-dotify-eb26e.cloudfunctions.net/api/getuseralbums',
+			{ params: { uid: uid } },
+		)
+		.then(res => {
+			console.log(res.data);
+			dispatch({ type: LOAD_USER_ALBUMS, payload: res.data });
+		});
 };

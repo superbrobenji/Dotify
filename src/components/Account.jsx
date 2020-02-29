@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
@@ -39,7 +38,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	uploadAlbum: albumData => dispatch(uploadAlbum(albumData)),
+	uploadAlbum: (albumData, albums) => dispatch(uploadAlbum(albumData, albums)),
 });
 
 const Account = props => {
@@ -48,11 +47,15 @@ const Account = props => {
 			let albumsComponents = [];
 			props.user.albums.forEach(album => {
 				//TODO don't do this make a album prototype
-				albumsComponents.push(<AlbumCard album={album} key={album.id} />);
+				albumsComponents.push(
+					<li>
+						<AlbumCard album={album} uid={props.uid} key={album.id} />
+					</li>,
+				);
 				handleAlbums(albumsComponents);
 			});
 		}
-	}, [props.user.albums]);
+	}, [props.uid, props.user.albums]);
 
 	const classes = useStyles();
 	const [albumsComp, setAlbumsComp] = useState();
@@ -62,23 +65,18 @@ const Account = props => {
 		genre: '',
 	});
 
-	const [nameOpen, setNameOpen] = React.useState(false);
-	const [imageOpen, setImageOpen] = React.useState(false);
-
+	const [nameOpen, setNameOpen] = useState(false);
+	const [currnetAlbum, setCurrentAlbum] = useState({
+		id: props.user.albums[props.user.albums.length - 1].id,
+		arrPos: props.user.albums.length - 1,
+	});
+	console.log(props.user.albums[currnetAlbum.arrPos]);
 	const handleFromChange = prop => event => {
 		setNewAlbum({ ...newAlbum, [prop]: event.target.value });
 	};
 
 	const handleClickOpenName = id => {
 		setNameOpen(true);
-	};
-
-	const handleClickOpenImage = () => {
-		setImageOpen(true);
-	};
-
-	const handleCloseImage = () => {
-		setImageOpen(false);
 	};
 
 	const handleCloseName = () => {
@@ -92,7 +90,9 @@ const Account = props => {
 	const submitForm = () => {
 		//TODO open dialog for image
 		handleCloseName();
-		props.uploadAlbum(newAlbum);
+		props.uploadAlbum(newAlbum, props.user.albums);
+		const current = props.user.albums[props.user.albums.length - 1];
+		setCurrentAlbum({ ...currnetAlbum, id: current.id });
 	};
 
 	return (
@@ -104,7 +104,8 @@ const Account = props => {
 
 			<div>
 				<h2>Albums</h2>
-				{albumsComp}
+				<ul>{albumsComp}</ul>
+
 				<Button
 					variant='outlined'
 					color='primary'
@@ -119,7 +120,7 @@ const Account = props => {
 				aria-labelledby='alert-dialog-title'
 				aria-describedby='alert-dialog-description'
 			>
-				<DialogTitle id='alert-dialog-title'>{'Create new album'}</DialogTitle>
+				<DialogTitle id='name-dialog-title'>{'Create new album'}</DialogTitle>
 				<DialogContent>
 					<form className={classes.root} noValidate autoComplete='off'>
 						<TextField

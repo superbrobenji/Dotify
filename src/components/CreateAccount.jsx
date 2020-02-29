@@ -51,7 +51,6 @@ const CreateAccount = props => {
 	const handleImageChange = async event => {
 		const image = event.target.files[0];
 
-		console.log('triggering redux');
 		props.uploadArtistImage(image, props.uid);
 	};
 	return props.isLoaded ? (

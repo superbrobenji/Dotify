@@ -13,6 +13,8 @@ import {
 	LOAD_USER_ALBUMS,
 	UPLOAD_ALBUM,
 	UPLOAD_ALBUM_ERROR,
+	UPLOAD_ALBUM_IMAGE,
+	UPLOAD_ALBUM_IMAGE_ERROR,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -39,6 +41,16 @@ export default (state = {}, action) => {
 				albums: action.payload,
 				isLoading: false,
 			};
+		case UPLOAD_ALBUM_IMAGE:
+			return {
+				...state,
+				isLoading: false,
+			};
+		case UPLOAD_ALBUM_IMAGE_ERROR:
+			return {
+				...state,
+				isLoading: false,
+			};
 		case UPLOAD_IMAGE:
 			return {
 				...state,
@@ -56,7 +68,7 @@ export default (state = {}, action) => {
 		case UPLOAD_ALBUM:
 			return {
 				...state,
-				albums: [...state.user.albums, action.payload],
+				albums: action.payload,
 				isLoading: false,
 			};
 		case UPLOAD_IMAGE_ERROR:
