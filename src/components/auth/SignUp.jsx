@@ -85,7 +85,6 @@ const SignUp = props => {
 			<FormControl className={clsx(classes.margin, classes.textField)}>
 				<InputLabel htmlFor='standard-adornment-password'>Password</InputLabel>
 				<Input
-					id='standard-adornment-password'
 					type={values.showPassword ? 'text' : 'password'}
 					value={values.password}
 					onChange={handleChange('password')}
@@ -107,7 +106,6 @@ const SignUp = props => {
 					Re-enter Password
 				</InputLabel>
 				<Input
-					id='standard-adornment-password'
 					type={values.showPasswordVer ? 'text' : 'password'}
 					value={values.passwordVer}
 					onChange={handleChange('passwordVer')}

@@ -19,6 +19,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AlbumIcon from '@material-ui/icons/Album';
 
 const mapDispatchToProps = dispatch => ({
 	signout: () => dispatch(signout()),
@@ -84,6 +85,12 @@ const Navigation = props => {
 						<AudiotrackIcon />
 					</ListItemIcon>
 					<ListItemText>Genres</ListItemText>
+				</ListItem>
+				<ListItem button component={Link} to={ROUTES.ALBUMS}>
+					<ListItemIcon>
+						<AlbumIcon />
+					</ListItemIcon>
+					<ListItemText>Albums</ListItemText>
 				</ListItem>
 				<Divider />
 				<ListItem button onClick={signOut}>

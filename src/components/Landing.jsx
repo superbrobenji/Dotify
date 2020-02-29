@@ -4,8 +4,16 @@ import Home from './Home';
 import SignIn from './auth/SignIn';
 import Loader from './Loader';
 import { startup } from '../actions/startup';
+import CreateAccount from './CreateAccount';
 
-const Landing = ({ isLoaded, isEmpty, uid, startup, isLoading }) => {
+const Landing = ({
+	isLoaded,
+	isEmpty,
+	uid,
+	startup,
+	isLoading,
+	createdProfile,
+}) => {
 	useEffect(() => {
 		if (!isEmpty) {
 			//TODO everything that needs to be pulled in on website start.
@@ -14,7 +22,17 @@ const Landing = ({ isLoaded, isEmpty, uid, startup, isLoading }) => {
 	}, [startup, isEmpty, uid]);
 	return (
 		<div>
-			{!isLoaded && isLoading ? <Loader /> : !isEmpty ? <Home /> : <SignIn />}
+			{!isLoaded ? (
+				<Loader />
+			) : !isEmpty ? (
+				!isLoading && createdProfile ? (
+					<Home />
+				) : (
+					<CreateAccount />
+				)
+			) : (
+				<SignIn />
+			)}
 		</div>
 	);
 };
@@ -29,6 +47,7 @@ const mapStateToProps = state => {
 		isEmpty: state.firebaseReducer.auth.isEmpty,
 		uid: state.firebaseReducer.auth.uid,
 		isLoading: state.user.isLoading,
+		createdProfile: state.user.createdProfile,
 	};
 };
 

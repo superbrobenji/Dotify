@@ -9,6 +9,7 @@ import Account from './Account';
 import Genres from './Genres';
 import Artists from './Artists';
 import CreateAccount from './CreateAccount';
+import Albums from './Albums';
 
 import * as ROUTES from '../router/routes';
 
@@ -22,6 +23,7 @@ const App = () => (
 		<Route path={ROUTES.ARTISTS} component={Artists} />
 		<Route path={ROUTES.GENRES} component={Genres} />
 		<Route path={ROUTES.CREATEACCOUNT} component={CreateAccount} />
+		<Route path={ROUTES.ALBUMS} component={Albums} />
 	</Router>
 );
 export default App;

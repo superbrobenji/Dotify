@@ -10,11 +10,19 @@ export const startup = uid => async dispatch => {
 		.doc(uid)
 		.get()
 		.then(doc => {
-			const artistImage = doc.data().artist_image;
+			const data = doc.data();
+			const accountCreated = data.account_created;
+			const artistImage = data.artist_image;
+			let userName = '';
+			let userSurname = '';
+			if (accountCreated) {
+				userName = data.artist_name;
+				userSurname = data.artist_surname;
+			}
 			dispatch({
 				type: LOAD_USER,
 				//TODO add all the other userdata here
-				payload: { artistImage },
+				payload: { artistImage, accountCreated, userName, userSurname },
 			});
 		});
 };

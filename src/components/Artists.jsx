@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { dummyAction } from '../actions/dummyAction';
 import requireAuth from './hoc/requireAuth';
 
-import Loader from './Loader';
 import Navigation from './Navigation';
 
 const mapStateToProps = state => ({
@@ -15,12 +14,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Artists = props => {
-	return props.isLoaded ? (
+	return (
 		<div>
 			<Navigation /> this is Artists
 		</div>
-	) : (
-		<Loader />
 	);
 };
 

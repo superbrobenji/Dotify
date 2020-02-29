@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { dummyAction } from '../actions/dummyAction';
 import requireAuth from './hoc/requireAuth';
-import { useHistory } from 'react-router-dom';
 
-import Loader from './Loader';
 import Navigation from './Navigation';
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -16,18 +14,14 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Home = props => {
-	const history = useHistory();
+	// useEffect(() => {
+	// 	if (props.createdProfile === false) history.push('/createaccount');
+	// }, [props.createdProfile, history]);
 
-	useEffect(() => {
-		if (!props.createdProfile) history.push('/createaccount');
-	}, [props.createdProfile, history]);
-
-	return props.isLoaded ? (
+	return (
 		<div>
 			<Navigation /> this is Home
 		</div>
-	) : (
-		<Loader />
 	);
 };
 
