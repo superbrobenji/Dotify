@@ -5,7 +5,6 @@ import Loader from '../Loader';
 export default ChildComponent => {
 	const ComposedComponent = props => {
 		useEffect(() => {
-			console.log(Object.entries(props.user).length);
 			if (props.auth.isLoaded && props.auth.isEmpty) {
 				return props.history.push('/');
 			}

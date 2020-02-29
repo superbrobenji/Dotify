@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { dummyAction } from '../actions/dummyAction';
 import requireAuth from './hoc/requireAuth';
 import Navigation from './Navigation';
+import AlbumCard from '../templates/AlbumCard';
 
 import Avatar from '@material-ui/core/Avatar';
 
@@ -16,7 +17,17 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Account = props => {
-	useEffect(() => {}, []);
+	const [albumsComp, setAlbumsComp] = useState();
+	useEffect(() => {
+		if (props.user.albums.length !== 0) {
+			let albumsComponents = [];
+			props.user.albums.forEach(album => {
+				//TODO don't do this make a album prototype
+				albumsComponents.push(<AlbumCard album={album} />);
+				setAlbumsComp(albumsComponents);
+			});
+		}
+	}, [albumsComp, props.user.albums]);
 	return (
 		<div>
 			<Navigation />
@@ -26,7 +37,8 @@ const Account = props => {
 
 			<div>
 				<h2>Albums</h2>
-				albums go here
+				{albumsComp}
+				create album
 			</div>
 		</div>
 	);

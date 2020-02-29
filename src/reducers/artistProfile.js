@@ -10,6 +10,7 @@ import {
 	SIGNUP_ERROR,
 	SIGNOUT_ERROR,
 	SIGNIN_ERROR,
+	LOAD_USER_ALBUMS,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -28,6 +29,13 @@ export default (state = {}, action) => {
 				createdProfile: action.payload.accountCreated,
 				name: action.payload.userName,
 				surname: action.payload.userSurname,
+			};
+		case LOAD_USER_ALBUMS:
+			console.log(action.payload);
+			return {
+				...state,
+				albums: action.payload,
+				isLoading: false,
 			};
 		case UPLOAD_IMAGE:
 			return {

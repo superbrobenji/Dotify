@@ -17,3 +17,5 @@ export const UPLOAD_IMAGE_ERROR = 'UPLOAD_IMAGE_ERROR';
 export const LOAD_USER = 'LOAD_USER';
 export const UPLOAD_USER = 'UPLOAD_USER';
 export const UPLOAD_USER_ERROR = 'UPLOAD_USER_ERROR';
+
+export const LOAD_USER_ALBUMS = 'LOAD_USER_ALBUMS';
