@@ -45,7 +45,6 @@ const CreateAccount = props => {
 	};
 
 	const submitForm = () => {
-		//TODO send data to db and redux and redirect to home.
 		props.uploadUserData(user, () => history.push('/home'));
 	};
 
