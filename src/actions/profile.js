@@ -39,7 +39,6 @@ export const uploadArtistImage = (image, uid) => async dispatch => {
 							payload: imgurl,
 						});
 					})
-					.then(() => {})
 					.catch(err => {
 						console.error(err);
 						dispatch({ type: UPLOAD_IMAGE_ERROR });

@@ -10,6 +10,11 @@ import {
 	SIGNUP_ERROR,
 	SIGNOUT_ERROR,
 	SIGNIN_ERROR,
+	LOAD_USER_ALBUMS,
+	UPLOAD_ALBUM,
+	UPLOAD_ALBUM_ERROR,
+	UPLOAD_ALBUM_IMAGE,
+	UPLOAD_ALBUM_IMAGE_ERROR,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -29,6 +34,23 @@ export default (state = {}, action) => {
 				name: action.payload.userName,
 				surname: action.payload.userSurname,
 			};
+		case LOAD_USER_ALBUMS:
+			console.log(action.payload);
+			return {
+				...state,
+				albums: action.payload,
+				isLoading: false,
+			};
+		case UPLOAD_ALBUM_IMAGE:
+			return {
+				...state,
+				isLoading: false,
+			};
+		case UPLOAD_ALBUM_IMAGE_ERROR:
+			return {
+				...state,
+				isLoading: false,
+			};
 		case UPLOAD_IMAGE:
 			return {
 				...state,
@@ -43,12 +65,23 @@ export default (state = {}, action) => {
 				createdProfile: true,
 				isLoading: false,
 			};
+		case UPLOAD_ALBUM:
+			return {
+				...state,
+				albums: action.payload,
+				isLoading: false,
+			};
 		case UPLOAD_IMAGE_ERROR:
 			return {
 				...state,
 				isLoading: false,
 			};
 		case UPLOAD_USER_ERROR:
+			return {
+				...state,
+				isLoading: false,
+			};
+		case UPLOAD_ALBUM_ERROR:
 			return {
 				...state,
 				isLoading: false,
