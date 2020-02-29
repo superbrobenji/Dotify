@@ -104,15 +104,14 @@ const Account = props => {
 
 			<div>
 				<h2>Albums</h2>
-				<ul>{albumsComp}</ul>
-
 				<Button
-					variant='outlined'
+					variant='contained'
 					color='primary'
 					onClick={handleClickOpenName}
 				>
 					Create Album
 				</Button>
+				<ul>{albumsComp}</ul>
 			</div>
 			<Dialog
 				open={nameOpen}

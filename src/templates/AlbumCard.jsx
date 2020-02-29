@@ -59,18 +59,25 @@ const AlbumCard = props => {
 						style={{ hight: '200px', width: '200px' }}
 					/>
 				</div>
-				<input
-					accept='image/*'
-					className={classes.input}
-					id='contained-button-file'
-					type='file'
-					onChange={handleImageChange}
-				/>
-				<label htmlFor='contained-button-file'>
-					<Button variant='contained' color='primary' component='span'>
-						Upload Image
-					</Button>
-				</label>
+				{props.uid === props.album.artist ? (
+					<div>
+						<input
+							accept='image/*'
+							className={classes.input}
+							id='contained-button-file'
+							type='file'
+							onChange={handleImageChange}
+						/>
+						<label htmlFor='contained-button-file'>
+							<Button variant='contained' color='primary' component='span'>
+								Upload Image
+							</Button>
+						</label>
+					</div>
+				) : (
+					<div></div>
+				)}
+
 				<div>
 					<h2>{props.album.albumName}</h2>
 				</div>
