@@ -9,6 +9,7 @@ import {
 	LOAD_ALL_ALBUMS_ERROR,
 	LOADING_FINISH,
 	LOAD_ARTIST_ALBUMS,
+	LOAD_ARTIST_ALBUMS_ERROR,
 } from './types';
 import axios from 'axios';
 import firebase from '../services/firebase';
@@ -126,5 +127,11 @@ export const getArtistAlbums = uid => async dispatch => {
 			dispatch({
 				type: LOADING_FINISH,
 			});
+		})
+		.catch(err => {
+			dispatch({
+				type: LOADING_FINISH,
+			});
+			dispatch({ LOAD_ARTIST_ALBUMS_ERROR });
 		});
 };

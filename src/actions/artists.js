@@ -21,5 +21,10 @@ export const getAllArtists = () => async dispatch => {
 				type: LOADING_FINISH,
 			});
 		})
-		.catch(err => dispatch({ type: LOAD_ALL_ARTISTS_ERROR, payload: err }));
+		.catch(err => {
+			dispatch({
+				type: LOADING_FINISH,
+			});
+			dispatch({ type: LOAD_ALL_ARTISTS_ERROR, payload: err });
+		});
 };
