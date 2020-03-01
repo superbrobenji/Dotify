@@ -5,7 +5,6 @@ import {
 	LOAD_ALL_ARTISTS_ERROR,
 } from './types';
 import axios from 'axios';
-import firebase from '../services/firebase';
 
 export const getAllArtists = () => async dispatch => {
 	dispatch({
