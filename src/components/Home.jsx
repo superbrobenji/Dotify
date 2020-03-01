@@ -1,41 +1,28 @@
 import React from 'react';
-import logo from '../assets/logo.svg';
-import './Home.css';
 import { connect } from 'react-redux';
 import { dummyAction } from '../actions/dummyAction';
+import requireAuth from './hoc/requireAuth';
 
+import Navigation from './Navigation';
 const mapStateToProps = state => ({
-	...state,
+	isLoaded: state.firebaseReducer.auth.isLoaded,
+	createdProfile: state.user.createdProfile,
 });
 
 const mapDispatchToProps = dispatch => ({
 	dummyAction: () => dispatch(dummyAction()),
 });
 
-function Home(props) {
-	const dummyAction = event => {
-		props.dummyAction();
-	};
+const Home = props => {
+	// useEffect(() => {
+	// 	if (props.createdProfile === false) history.push('/createaccount');
+	// }, [props.createdProfile, history]);
+
 	return (
-		<div className='App'>
-			<header className='App-header'>
-				<img src={logo} className='App-logo' alt='logo' />
-				<p>
-					Edit <code>src/components/Home.js</code> and save to reload.
-				</p>
-				<a
-					className='App-link'
-					href='https://reactjs.org'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					Learn React
-				</a>
-			</header>
-			<button onClick={dummyAction}>Test redux action</button>
-			<pre>{JSON.stringify(props)}</pre>
+		<div>
+			<Navigation /> this is Home
 		</div>
 	);
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(requireAuth(Home));
