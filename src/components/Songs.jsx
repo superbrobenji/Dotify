@@ -20,8 +20,8 @@ const mapStateToProps = state => ({
 const useStyles = makeStyles({
 	root: {
 		minWidth: 275,
-		width: '150px',
-		height: '80px',
+		width: '325px',
+		height: '130px',
 		marginTop: '2rem',
 	},
 	bullet: {
@@ -53,13 +53,17 @@ const Songs = props => {
 		props.songs.forEach(song => {
 			songComponents.push(
 				<li key={song.id}>
-					<p>{song.songName}</p>
-					<ReactAudioPlayer src={song.songUrl} controls />
+					<Card className={classes.root}>
+						<CardContent>
+							<p>{song.songName}</p>
+							<ReactAudioPlayer src={song.songUrl} controls />
+						</CardContent>
+					</Card>
 				</li>,
 			);
 			handleState(songComponents);
 		});
-	}, [props.songs]);
+	}, [classes.root, props.songs]);
 
 	const handleState = song => {
 		setSongComps(song);
