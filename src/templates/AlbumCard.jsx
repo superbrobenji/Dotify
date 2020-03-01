@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { uploadAlbumImage } from '../actions/albums';
+import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -42,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
 
 const AlbumCard = props => {
 	const classes = useStyles();
+	const history = useHistory();
 
 	const handleImageChange = async event => {
 		const image = event.target.files[0];
@@ -49,8 +51,14 @@ const AlbumCard = props => {
 		console.log('triggering redux');
 		props.uploadAlbumImage(image, props.album.id, props.uid);
 	};
+	const handleCardClick = () => {
+		history.push({
+			pathname: '/songs',
+			state: { uid: props.uid, currentAlbum: props.album },
+		});
+	};
 	return (
-		<Card className={classes.root}>
+		<Card className={classes.root} onClick={handleCardClick}>
 			<CardContent>
 				<div>
 					<img
@@ -82,6 +90,7 @@ const AlbumCard = props => {
 					<h2>{props.album.albumName}</h2>
 				</div>
 				<div>
+					<p>artist: {props.album.artistName}</p>
 					<p>genre: {props.album.genre}</p>{' '}
 					<p>Songs: {props.album.songCount}</p>
 				</div>

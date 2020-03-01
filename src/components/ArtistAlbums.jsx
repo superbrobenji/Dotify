@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import requireAuth from './hoc/requireAuth';
 import AlbumCard from '../templates/AlbumCard';
-
 import Navigation from './Navigation';
+
+import Avatar from '@material-ui/core/Avatar';
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -13,7 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({});
 
-const Albums = props => {
+const ArtistAlbums = props => {
+	console.log(props.location.state.currentuser);
 	useEffect(() => {
 		if (props.albums.arr !== undefined) {
 			if (props.albums.arr.length !== 0) {
@@ -39,7 +41,14 @@ const Albums = props => {
 
 	return (
 		<div>
-			<Navigation /> {albumsComp}
+			<Navigation />
+			<div>
+				<Avatar alt='' src={props.location.state.currentuser.imageUrl} />
+				<h3>{props.location.state.currentuser.artistName}</h3>
+				<h3>{props.location.state.currentuser.artistSurname}</h3>
+			</div>
+			<h2>Albums</h2>
+			{albumsComp}
 		</div>
 	);
 };
@@ -47,4 +56,4 @@ const Albums = props => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(requireAuth(Albums));
+)(requireAuth(ArtistAlbums));
