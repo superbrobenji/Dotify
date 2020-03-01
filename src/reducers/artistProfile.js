@@ -15,6 +15,7 @@ import {
 	UPLOAD_ALBUM_ERROR,
 	UPLOAD_ALBUM_IMAGE,
 	UPLOAD_ALBUM_IMAGE_ERROR,
+	LOADING_FINISH,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -108,6 +109,11 @@ export default (state = {}, action) => {
 			return {
 				...state,
 				isLoading: true,
+			};
+		case LOADING_FINISH:
+			return {
+				...state,
+				isLoading: false,
 			};
 		case SIGNOUT_ERROR:
 			return {

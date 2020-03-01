@@ -46,7 +46,6 @@ const Account = props => {
 		if (props.user.albums.length !== 0) {
 			let albumsComponents = [];
 			props.user.albums.forEach(album => {
-				//TODO don't do this make a album prototype
 				albumsComponents.push(
 					<li>
 						<AlbumCard album={album} uid={props.uid} key={album.id} />
@@ -63,6 +62,7 @@ const Account = props => {
 		albumName: '',
 		artist: props.uid,
 		genre: '',
+		artistName: props.user.name,
 	});
 
 	const [nameOpen, setNameOpen] = useState(false);

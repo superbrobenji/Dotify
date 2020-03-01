@@ -5,6 +5,9 @@ import {
 	UPLOAD_ALBUM_IMAGE,
 	UPLOAD_ALBUM_IMAGE_ERROR,
 	LOAD_USER_ALBUMS,
+	LOAD_ALL_ALBUMS,
+	LOAD_ALL_ALBUMS_ERROR,
+	LOADING_FINISH,
 } from './types';
 import axios from 'axios';
 import firebase from '../services/firebase';
@@ -89,4 +92,20 @@ export const uploadAlbumImage = (
 				dispatch({ type: LOAD_USER_ALBUMS, payload: res.data });
 			});
 	};
+};
+
+export const getAllAlbums = () => async dispatch => {
+	dispatch({
+		type: LOADING_ARTIST,
+	});
+	axios
+		.get('https://us-central1-dotify-eb26e.cloudfunctions.net/api/getallalbums')
+		.then(res => {
+			console.log(res.data);
+			dispatch({ type: LOAD_ALL_ALBUMS, payload: [...res.data] });
+			dispatch({
+				type: LOADING_FINISH,
+			});
+		})
+		.catch(err => dispatch({ type: LOAD_ALL_ALBUMS_ERROR, payload: err }));
 };
