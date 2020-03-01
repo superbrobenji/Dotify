@@ -21,7 +21,7 @@ const Artists = props => {
 				console.log(props.artists);
 				props.artists.arr.forEach(artist => {
 					artistsComponents.push(
-						<li>
+						<li key={artist.uid}>
 							<ArtistCard artist={artist} uid={props.uid} key={artist.uid} />
 						</li>,
 					);

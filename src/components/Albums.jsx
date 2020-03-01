@@ -21,7 +21,7 @@ const Albums = props => {
 				console.log(props.albums);
 				props.albums.arr.forEach(album => {
 					albumsComponents.push(
-						<li>
+						<li key={album.id}>
 							<AlbumCard album={album} uid={props.uid} key={album.id} />
 						</li>,
 					);

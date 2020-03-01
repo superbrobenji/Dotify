@@ -47,7 +47,7 @@ const Account = props => {
 			let albumsComponents = [];
 			props.user.albums.forEach(album => {
 				albumsComponents.push(
-					<li>
+					<li key={album.id}>
 						<AlbumCard album={album} uid={props.uid} key={album.id} />
 					</li>,
 				);
