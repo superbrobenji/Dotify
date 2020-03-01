@@ -8,3 +8,4 @@ export const ARTISTS = '/artists';
 export const CREATEACCOUNT = '/createaccount';
 export const ALBUMS = '/albums';
 export const ARTISTALBUMS = '/artistalbums';
+export const SONGS = '/songs';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { uploadAlbumImage } from '../actions/albums';
+import { getAlbumSongs } from '../actions/songs';
 import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,6 +40,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	uploadAlbumImage: (image, currnetAlbum, uid) =>
 		dispatch(uploadAlbumImage(image, currnetAlbum, uid)),
+	getAlbumSongs: (uid, currentAlbum) =>
+		dispatch(getAlbumSongs(uid, currentAlbum)),
 });
 
 const AlbumCard = props => {
@@ -56,6 +59,7 @@ const AlbumCard = props => {
 			pathname: '/songs',
 			state: { uid: props.uid, currentAlbum: props.album },
 		});
+		props.getAlbumSongs(props.uid, props.album);
 	};
 	return (
 		<Card className={classes.root} onClick={handleCardClick}>

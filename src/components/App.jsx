@@ -8,6 +8,7 @@ import Landing from './Landing';
 import Account from './Account';
 import Genres from './Genres';
 import Artists from './Artists';
+import Songs from './Songs';
 import CreateAccount from './CreateAccount';
 import Albums from './Albums';
 import ArtistAlbums from './ArtistAlbums';
@@ -25,6 +26,7 @@ const App = () => (
 		<Route path={ROUTES.GENRES} component={Genres} />
 		<Route path={ROUTES.CREATEACCOUNT} component={CreateAccount} />
 		<Route path={ROUTES.ALBUMS} component={Albums} />
+		<Route path={ROUTES.SONGS} component={Songs} />
 		<Route path={ROUTES.ARTISTALBUMS} component={ArtistAlbums} />
 	</Router>
 );

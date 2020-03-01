@@ -47,7 +47,6 @@ const ArtistCard = props => {
 		history.push({
 			pathname: '/artistalbums',
 			state: { uid: props.uid, currentuser: props.artist },
-			//TODO run dispatch that gets albums of this user
 		});
 		props.getArtistAlbums(props.artist.uid);
 	};
