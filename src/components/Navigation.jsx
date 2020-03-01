@@ -4,6 +4,7 @@ import * as ROUTES from '../router/routes';
 import { signout } from '../actions/auth';
 import { getAllAlbums } from '../actions/albums';
 import { getAllArtists } from '../actions/artists';
+import { getAllGenres } from '../actions/genres';
 
 import { connect } from 'react-redux';
 
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
 	signout: () => dispatch(signout()),
 	getAllAlbums: () => dispatch(getAllAlbums()),
 	getAllArtists: () => dispatch(getAllArtists()),
+	getAllGenres: () => dispatch(getAllGenres()),
 });
 
 const Navigation = props => {
@@ -89,7 +91,12 @@ const Navigation = props => {
 					</ListItemIcon>
 					<ListItemText>Artists</ListItemText>
 				</ListItem>
-				<ListItem button component={Link} to={ROUTES.GENRES}>
+				<ListItem
+					button
+					component={Link}
+					to={ROUTES.GENRES}
+					onClick={props.getAllGenres}
+				>
 					<ListItemIcon>
 						<AudiotrackIcon />
 					</ListItemIcon>

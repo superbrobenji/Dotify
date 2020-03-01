@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import artistProfile from './artistProfile';
 import albums from './albums';
 import artists from './artists';
+import genres from './genres';
 import { firebaseReducer } from 'react-redux-firebase';
 import { firestoreReducer } from 'redux-firestore';
 
@@ -13,4 +14,5 @@ export default combineReducers({
 	user: artistProfile,
 	albums: albums,
 	artists: artists,
+	genres: genres,
 });

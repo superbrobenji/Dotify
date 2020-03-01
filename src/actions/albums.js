@@ -10,9 +10,35 @@ import {
 	LOADING_FINISH,
 	LOAD_ARTIST_ALBUMS,
 	LOAD_ARTIST_ALBUMS_ERROR,
+	LOAD_GENRE_ALBUMS,
+	LOAD_GENRE_ALBUMS_ERROR,
 } from './types';
 import axios from 'axios';
 import firebase from '../services/firebase';
+
+export const getGenreAlbums = genre => async dispatch => {
+	dispatch({
+		type: LOADING_ARTIST,
+	});
+	axios
+		.get(
+			'https://us-central1-dotify-eb26e.cloudfunctions.net/api/getgenrealbums',
+			{ params: { genre: genre } },
+		)
+		.then(res => {
+			console.log(res.data);
+			dispatch({ type: LOAD_GENRE_ALBUMS, payload: res.data });
+			dispatch({
+				type: LOADING_FINISH,
+			});
+		})
+		.catch(err => {
+			dispatch({
+				type: LOADING_FINISH,
+			});
+			dispatch({ LOAD_GENRE_ALBUMS_ERROR });
+		});
+};
 
 export const uploadAlbum = (albumData, albums) => async dispatch => {
 	console.log(albumData);
