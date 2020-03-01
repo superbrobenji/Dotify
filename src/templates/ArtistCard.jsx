@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { getArtistAlbums } from '../actions/albums';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -34,7 +35,9 @@ const mapStateToProps = state => ({
 	createdProfile: state.user.createdProfile,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	getArtistAlbums: uid => dispatch(getArtistAlbums(uid)),
+});
 
 const ArtistCard = props => {
 	const classes = useStyles();
@@ -46,6 +49,7 @@ const ArtistCard = props => {
 			state: { uid: props.uid, currentuser: props.artist },
 			//TODO run dispatch that gets albums of this user
 		});
+		props.getArtistAlbums(props.artist.uid);
 	};
 	return (
 		<Card className={classes.root} onClick={handleCardClick}>

@@ -1,27 +1,54 @@
-//TODO show this when user clicks on artist on the /artist view
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { dummyAction } from '../actions/dummyAction';
 import requireAuth from './hoc/requireAuth';
-
+import AlbumCard from '../templates/AlbumCard';
 import Navigation from './Navigation';
+
+import Avatar from '@material-ui/core/Avatar';
+
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
-	createdProfile: state.user.createdProfile,
+	uid: state.firebaseReducer.auth.uid,
+	albums: state.albums,
 });
 
-const mapDispatchToProps = dispatch => ({
-	dummyAction: () => dispatch(dummyAction()),
-});
+const mapDispatchToProps = dispatch => ({});
 
 const ArtistAlbums = props => {
-	// useEffect(() => {
-	// 	if (props.createdProfile === false) history.push('/createaccount');
-	// }, [props.createdProfile, history]);
+	console.log(props.location.state.currentuser);
+	useEffect(() => {
+		if (props.albums.arr !== undefined) {
+			if (props.albums.arr.length !== 0) {
+				let albumsComponents = [];
+				console.log(props.albums);
+				props.albums.arr.forEach(album => {
+					albumsComponents.push(
+						<li>
+							<AlbumCard album={album} uid={props.uid} key={album.id} />
+						</li>,
+					);
+					handleAlbums(albumsComponents);
+				});
+			}
+		}
+	}, [props.albums, props.uid]);
+
+	const [albumsComp, setAlbumsComp] = useState();
+
+	const handleAlbums = components => {
+		setAlbumsComp(components);
+	};
 
 	return (
 		<div>
-			<Navigation /> this is artist albums
+			<Navigation />
+			<div>
+				<Avatar alt='' src={props.location.state.currentuser.imageUrl} />
+				<h3>{props.location.state.currentuser.artistName}</h3>
+				<h3>{props.location.state.currentuser.artistSurname}</h3>
+			</div>
+			<h2>Albums</h2>
+			{albumsComp}
 		</div>
 	);
 };

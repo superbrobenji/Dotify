@@ -88,7 +88,6 @@ const Account = props => {
 	};
 
 	const submitForm = () => {
-		//TODO open dialog for image
 		handleCloseName();
 		props.uploadAlbum(newAlbum, props.user.albums);
 		const current = props.user.albums[props.user.albums.length - 1];
@@ -128,6 +127,7 @@ const Account = props => {
 							value={newAlbum.albumName}
 							onChange={handleFromChange('albumName')}
 						/>
+						{/* //TODO redo this to select from available genres */}
 						<TextField
 							id='standard-basic'
 							label='genre'
@@ -145,7 +145,6 @@ const Account = props => {
 					</Button>
 				</DialogActions>
 			</Dialog>
-			{/* TODO add dialog for image */}
 		</div>
 	);
 };
