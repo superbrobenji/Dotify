@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import * as ROUTES from '../router/routes';
 import { signout } from '../actions/auth';
 import { getAllAlbums } from '../actions/albums';
+import { getAllArtists } from '../actions/artists';
 
 import { connect } from 'react-redux';
 
@@ -25,6 +26,7 @@ import AlbumIcon from '@material-ui/icons/Album';
 const mapDispatchToProps = dispatch => ({
 	signout: () => dispatch(signout()),
 	getAllAlbums: () => dispatch(getAllAlbums()),
+	getAllArtists: () => dispatch(getAllArtists()),
 });
 
 const Navigation = props => {
@@ -76,7 +78,12 @@ const Navigation = props => {
 					</ListItemIcon>
 					<ListItemText>Home</ListItemText>
 				</ListItem>
-				<ListItem button component={Link} to={ROUTES.ARTISTS}>
+				<ListItem
+					button
+					component={Link}
+					to={ROUTES.ARTISTS}
+					onClick={props.getAllArtists}
+				>
 					<ListItemIcon>
 						<PeopleIcon />
 					</ListItemIcon>
