@@ -25,7 +25,7 @@ const Home = props => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Navigation /> this is Home
+			<Navigation /> <div className={classes.body}>this is Home</div>
 		</ThemeProvider>
 	);
 };
