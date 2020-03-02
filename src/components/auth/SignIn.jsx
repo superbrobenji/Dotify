@@ -12,7 +12,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -21,29 +21,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import { useStyles, theme } from '../../MaterialTheme/globalTheme';
 const mapDispatchToProps = dispatch => ({
 	signin: (email, password, callback) =>
 		dispatch(signin(email, password, callback)),
 	resetPassword: email => dispatch(resetPassword(email)),
 	startup: uid => dispatch(startup(uid)),
 });
-
-const useStyles = makeStyles(theme => ({
-	root: {
-		display: 'flex',
-		flexWrap: 'wrap',
-	},
-	margin: {
-		margin: theme.spacing(1),
-	},
-	withoutLabel: {
-		marginTop: theme.spacing(3),
-	},
-	textField: {
-		width: 200,
-	},
-}));
 
 const SignIn = props => {
 	const history = useHistory();
@@ -92,79 +76,103 @@ const SignIn = props => {
 	};
 
 	return (
-		<Card className={classes.root}>
-			<CardContent>
-				<FormControl className={clsx(classes.margin, classes.textField)}>
-					<InputLabel htmlFor='standard-with-icon-adornment'>Email</InputLabel>
-					<Input
-						id='input-with-icon-adornment'
-						value={values.email}
-						onChange={handleChange('email')}
-					/>
-				</FormControl>
-				<FormControl className={clsx(classes.margin, classes.textField)}>
-					<InputLabel htmlFor='standard-adornment-password'>
-						Password
-					</InputLabel>
-					<Input
-						id='standard-adornment-password'
-						type={values.showPassword ? 'text' : 'password'}
-						value={values.password}
-						onChange={handleChange('password')}
-						endAdornment={
-							<InputAdornment position='end'>
-								<IconButton
-									aria-label='toggle password visibility'
-									onClick={handleClickShowPassword}
-									onMouseDown={handleMouseDownPassword}
+		<ThemeProvider theme={theme}>
+			<div className={classes.body}>
+				<Card className={classes.card}>
+					<CardContent>
+						<div className={classes.cardContent}>
+							<FormControl className={clsx(classes.margin, classes.textField)}>
+								<InputLabel htmlFor='standard-with-icon-adornment'>
+									Email
+								</InputLabel>
+								<Input
+									id='input-with-icon-adornment'
+									value={values.email}
+									onChange={handleChange('email')}
+								/>
+							</FormControl>
+							<FormControl className={clsx(classes.margin, classes.textField)}>
+								<InputLabel htmlFor='standard-adornment-password'>
+									Password
+								</InputLabel>
+								<Input
+									id='standard-adornment-password'
+									type={values.showPassword ? 'text' : 'password'}
+									value={values.password}
+									onChange={handleChange('password')}
+									endAdornment={
+										<InputAdornment position='end'>
+											<IconButton
+												aria-label='toggle password visibility'
+												onClick={handleClickShowPassword}
+												onMouseDown={handleMouseDownPassword}
+											>
+												{values.showPassword ? (
+													<Visibility />
+												) : (
+													<VisibilityOff />
+												)}
+											</IconButton>
+										</InputAdornment>
+									}
+								/>
+							</FormControl>
+							<div className={classes.button}>
+								<Button variant='contained' color='primary' onClick={signIn}>
+									Sign In
+								</Button>
+							</div>
+						</div>
+						<div className={classes.button}>
+							Don't have an account?
+							<Button color='primary' onClick={signUp}>
+								Sign Up
+							</Button>
+						</div>
+						<div className={classes.button}>
+							forgot your password?
+							<Button color='primary' onClick={handleClickOpen}>
+								Reset Password
+							</Button>
+						</div>
+						<Dialog
+							open={open}
+							onClose={handleClose}
+							aria-labelledby='form-dialog-title'
+						>
+							<DialogTitle id='form-dialog-title'>
+								Reset Your Password
+							</DialogTitle>
+							<DialogContent>
+								<DialogContentText>
+									Please enter your account email.
+								</DialogContentText>
+								<FormControl
+									className={clsx(classes.margin, classes.textField)}
 								>
-									{values.showPassword ? <Visibility /> : <VisibilityOff />}
-								</IconButton>
-							</InputAdornment>
-						}
-					/>
-				</FormControl>
-				<Button variant='contained' color='primary' onClick={signIn}>
-					Sign In
-				</Button>
-				<Button variant='contained' color='primary' onClick={signUp}>
-					Sign Up
-				</Button>
-				<Button variant='contained' color='primary' onClick={handleClickOpen}>
-					Reset Password
-				</Button>
-				<Dialog
-					open={open}
-					onClose={handleClose}
-					aria-labelledby='form-dialog-title'
-				>
-					<DialogTitle id='form-dialog-title'>Reset Your Password</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							Please enter your account email.
-						</DialogContentText>
-						<FormControl className={clsx(classes.margin, classes.textField)}>
-							<InputLabel htmlFor='standard-with-icon-adornment'>
-								Email
-							</InputLabel>
-							<Input
-								id='input-with-icon-adornment'
-								value={values.recoveryEmail}
-								onChange={handleChange('recoveryEmail')}
-							/>
-						</FormControl>
-					</DialogContent>
-					<DialogActions>
-						<Button onClick={handleClose} color='primary'>
-							Cancel
-						</Button>
-						<Button onClick={reset_password} color='primary'>
-							Send Email
-						</Button>
-					</DialogActions>
-				</Dialog>
-			</CardContent>
-		</Card>
+									<InputLabel htmlFor='standard-with-icon-adornment'>
+										Email
+									</InputLabel>
+									<Input
+										id='input-with-icon-adornment'
+										value={values.recoveryEmail}
+										onChange={handleChange('recoveryEmail')}
+									/>
+								</FormControl>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={handleClose} color='primary'>
+									Cancel
+								</Button>
+								<Button onClick={reset_password} color='primary'>
+									Send Email
+								</Button>
+							</DialogActions>
+						</Dialog>
+					</CardContent>
+				</Card>
+			</div>
+		</ThemeProvider>
 	);
 };
 export default connect(null, mapDispatchToProps)(SignIn);
