@@ -4,6 +4,9 @@ import { dummyAction } from '../actions/dummyAction';
 import requireAuth from './hoc/requireAuth';
 import GenreCard from '../templates/GenreCard';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
+
 import Navigation from './Navigation';
 
 const mapStateToProps = state => ({
@@ -17,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Genres = props => {
+	const classes = useStyles();
+
 	useEffect(() => {
 		if (props.genres.arr !== undefined) {
 			if (props.genres.arr.length !== 0) {
@@ -24,7 +29,7 @@ const Genres = props => {
 				props.genres.arr.forEach(genre => {
 					console.log(genre);
 					genresComponents.push(
-						<li key={genre}>
+						<li key={genre} className={classes.albumCard}>
 							<GenreCard genre={genre} uid={props.uid} key={genre} />
 						</li>,
 					);
@@ -41,10 +46,12 @@ const Genres = props => {
 	};
 
 	return (
-		<div>
-			<Navigation />
-			<ul>{genresComp}</ul>
-		</div>
+		<ThemeProvider theme={theme}>
+			<div>
+				<Navigation />
+				<ul className={classes.AccountAlbumList}>{genresComp}</ul>
+			</div>
+		</ThemeProvider>
 	);
 };
 

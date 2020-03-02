@@ -78,6 +78,8 @@ export const useStyles = makeStyles(theme => ({
 		listStyle: 'none',
 		justifyContent: 'center',
 		alignItems: 'center',
+		marginLeft: '5rem',
+		marginRight: '5rem',
 	},
 	albumCard: {
 		margin: '1rem',
