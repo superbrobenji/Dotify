@@ -24,8 +24,8 @@ const Landing = ({
 		<div>
 			{!isLoaded ? (
 				<Loader />
-			) : !isEmpty ? (
-				!isLoading && createdProfile ? (
+			) : !isEmpty && !isLoading ? (
+				createdProfile ? (
 					<Home />
 				) : (
 					<CreateAccount />

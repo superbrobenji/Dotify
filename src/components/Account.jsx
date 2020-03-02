@@ -91,7 +91,7 @@ const Account = props => {
 							style={{ width: '8rem', height: '8rem' }}
 						/>
 					</div>
-					<div classname={classes.accountDetails}>
+					<div className={classes.accountDetails}>
 						<h3>{props.user.name}</h3>
 						<h3>{props.user.surname}</h3>
 					</div>
@@ -117,7 +117,7 @@ const Account = props => {
 				>
 					<DialogTitle id='name-dialog-title'>{'Create new album'}</DialogTitle>
 					<DialogContent>
-						<form className={classes.root} noValidate autoComplete='off'>
+						<form className={classes.cardContent} noValidate autoComplete='off'>
 							<TextField
 								id='standard-basic'
 								label='Album name'
