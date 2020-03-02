@@ -4,23 +4,15 @@ import { uploadArtistImage, uploadUserData } from '../actions/profile';
 import requireAuth from './hoc/requireAuth';
 import { useHistory } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 import Loader from './Loader';
-
-const useStyles = makeStyles(theme => ({
-	root: {
-		'& > *': {
-			margin: theme.spacing(1),
-		},
-	},
-	input: {
-		display: 'none',
-	},
-}));
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -53,41 +45,63 @@ const CreateAccount = props => {
 
 		props.uploadArtistImage(image, props.uid);
 	};
-	return props.isLoaded ? (
-		<div className={classes.root}>
-			{props.isLoading ? <Loader /> : <Avatar alt='' src={props.imageUrl} />}
-			<input
-				accept='image/*'
-				className={classes.input}
-				id='contained-button-file'
-				type='file'
-				onChange={handleImageChange}
-			/>
-			<label htmlFor='contained-button-file'>
-				<Button variant='contained' color='primary' component='span'>
-					Upload
-				</Button>
-			</label>
-			<form className={classes.root} noValidate autoComplete='off'>
-				<TextField
-					id='standard-basic'
-					label='Name'
-					value={user.name}
-					onChange={handleFromChange('name')}
-				/>
-				<TextField
-					id='standard-basic'
-					label='Surname'
-					value={user.surname}
-					onChange={handleFromChange('surname')}
-				/>
-				<Button variant='contained' color='primary' onClick={submitForm}>
-					submit
-				</Button>
-			</form>
-		</div>
-	) : (
-		<Loader />
+	return (
+		<ThemeProvider theme={theme}>
+			<div className={classes.body}>
+				<Card className={classes.card}>
+					<CardContent className={classes.cardContent}>
+						<div className={classes.cardContent}>
+							{props.isLoading ? (
+								<Loader />
+							) : (
+								<Avatar
+									style={{ width: '6rem', height: '6rem' }}
+									alt=''
+									src={props.imageUrl}
+								/>
+							)}
+							<input
+								accept='image/*'
+								className={classes.input}
+								id='contained-button-file'
+								type='file'
+								onChange={handleImageChange}
+							/>
+							<label htmlFor='contained-button-file'>
+								<div className={classes.button}>
+									<Button variant='contained' color='primary' component='span'>
+										Upload
+									</Button>
+								</div>
+							</label>
+						</div>
+						<form className={classes.cardContent} noValidate autoComplete='off'>
+							<TextField
+								id='standard-basic'
+								label='Name'
+								value={user.name}
+								onChange={handleFromChange('name')}
+							/>
+							<TextField
+								id='standard-basic'
+								label='Surname'
+								value={user.surname}
+								onChange={handleFromChange('surname')}
+							/>
+							<div className={classes.button}>
+								<Button
+									variant='contained'
+									color='primary'
+									onClick={submitForm}
+								>
+									submit
+								</Button>
+							</div>
+						</form>
+					</CardContent>
+				</Card>
+			</div>
+		</ThemeProvider>
 	);
 };
 

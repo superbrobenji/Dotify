@@ -29,6 +29,9 @@ export const useStyles = makeStyles(theme => ({
 		width: '25rem',
 		height: 'auto',
 	},
+	input: {
+		display: 'none',
+	},
 	cardContent: {
 		display: 'flex',
 		alignItems: 'center',
