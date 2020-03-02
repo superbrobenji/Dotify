@@ -9,7 +9,7 @@ import { getAllGenres } from '../actions/genres';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../MaterialTheme/globalTheme';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,6 +23,7 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AlbumIcon from '@material-ui/icons/Album';
+import Card from '@material-ui/core/Card';
 
 const mapDispatchToProps = dispatch => ({
 	signout: () => dispatch(signout()),
@@ -32,15 +33,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Navigation = props => {
-	const useStyles = makeStyles({
-		list: {
-			width: 250,
-		},
-		fullList: {
-			width: 'auto',
-		},
-	});
-
 	const classes = useStyles();
 	const [state, setState] = React.useState({
 		top: false,
@@ -129,10 +121,12 @@ const Navigation = props => {
 	};
 
 	return (
-		<div>
-			<Button onClick={toggleDrawer('left', true)}>
-				<MenuIcon />
-			</Button>
+		<div className={classes.button}>
+			<Card>
+				<Button onClick={toggleDrawer('left', true)}>
+					<MenuIcon fontSize='large' />
+				</Button>
+			</Card>
 			<Drawer open={state.left} onClose={toggleDrawer('left', false)}>
 				{sideList('left')}
 			</Drawer>

@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { uploadAlbumImage } from '../actions/albums';
 import { getAlbumSongs } from '../actions/songs';
 import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
 	root: {
@@ -38,8 +36,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	uploadAlbumImage: (image, currnetAlbum, uid) =>
-		dispatch(uploadAlbumImage(image, currnetAlbum, uid)),
 	getAlbumSongs: (uid, currentAlbum) =>
 		dispatch(getAlbumSongs(uid, currentAlbum)),
 });
@@ -48,12 +44,6 @@ const AlbumCard = props => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const handleImageChange = async event => {
-		const image = event.target.files[0];
-
-		console.log('triggering redux');
-		props.uploadAlbumImage(image, props.album.id, props.uid);
-	};
 	const handleCardClick = () => {
 		history.push({
 			pathname: '/songs',
@@ -71,24 +61,6 @@ const AlbumCard = props => {
 						style={{ hight: '200px', width: '200px' }}
 					/>
 				</div>
-				{props.uid === props.album.artist ? (
-					<div>
-						<input
-							accept='image/*'
-							className={classes.input}
-							id='contained-button-file'
-							type='file'
-							onChange={handleImageChange}
-						/>
-						<label htmlFor='contained-button-file'>
-							<Button variant='contained' color='primary' component='span'>
-								Upload Image
-							</Button>
-						</label>
-					</div>
-				) : (
-					<div></div>
-				)}
 
 				<div>
 					<h2>{props.album.albumName}</h2>
