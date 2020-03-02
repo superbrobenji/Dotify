@@ -53,19 +53,21 @@ const Songs = props => {
 	const [songComps, setSongComps] = useState([]);
 	useEffect(() => {
 		let songComponents = [];
-		props.songs.forEach(song => {
-			songComponents.push(
-				<li key={song.id}>
-					<Card className={classes.root}>
-						<CardContent>
-							<p>{song.songName}</p>
-							<ReactAudioPlayer src={song.songUrl} controls />
-						</CardContent>
-					</Card>
-				</li>,
-			);
-			handleState(songComponents);
-		});
+		if (props.songs.length !== 0) {
+			props.songs.forEach(song => {
+				songComponents.push(
+					<li key={song.id}>
+						<Card className={classes.root}>
+							<CardContent>
+								<p>{song.songName}</p>
+								<ReactAudioPlayer src={song.songUrl} controls />
+							</CardContent>
+						</Card>
+					</li>,
+				);
+				handleState(songComponents);
+			});
+		}
 	}, [classes.root, props.songs]);
 
 	const handleState = song => {

@@ -51,11 +51,7 @@ const Account = props => {
 	});
 
 	const [nameOpen, setNameOpen] = useState(false);
-	const [currnetAlbum, setCurrentAlbum] = useState({
-		id: props.user.albums[props.user.albums.length - 1].id,
-		arrPos: props.user.albums.length - 1,
-	});
-	console.log(props.user.albums[currnetAlbum.arrPos]);
+
 	const handleFromChange = prop => event => {
 		setNewAlbum({ ...newAlbum, [prop]: event.target.value });
 	};
@@ -75,8 +71,6 @@ const Account = props => {
 	const submitForm = () => {
 		handleCloseName();
 		props.uploadAlbum(newAlbum, props.user.albums);
-		const current = props.user.albums[props.user.albums.length - 1];
-		setCurrentAlbum({ ...currnetAlbum, id: current.id });
 	};
 
 	return (

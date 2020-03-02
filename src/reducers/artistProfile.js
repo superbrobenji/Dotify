@@ -30,7 +30,6 @@ export default (state = {}, action) => {
 			return {
 				...state,
 				imageUrl: action.payload.artistImage,
-				isLoading: false,
 				createdProfile: action.payload.accountCreated,
 				name: action.payload.userName,
 				surname: action.payload.userSurname,
