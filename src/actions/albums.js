@@ -102,6 +102,10 @@ export const uploadAlbumImage = (
 							type: UPLOAD_ALBUM_IMAGE,
 							payload: imgurl,
 						});
+					})
+					.catch(err => {
+						console.error(err);
+						dispatch({ type: UPLOAD_ALBUM_IMAGE_ERROR });
 					});
 			});
 		});
