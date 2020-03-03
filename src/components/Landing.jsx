@@ -17,14 +17,18 @@ const Landing = ({
 	useEffect(() => {
 		if (!isEmpty) {
 			//TODO everything that needs to be pulled in on website start.
-			startup(uid);
+			//console.log(createdProfile);
+			if (createdProfile) {
+				startup(uid);
+			}
 		}
-	}, [startup, isEmpty, uid]);
+	}, [startup, isEmpty, uid, createdProfile]);
 	return (
 		<div>
-			{!isLoaded ? (
+			{console.log(createdProfile)}
+			{!isLoaded || isLoading ? (
 				<Loader />
-			) : !isEmpty && !isLoading ? (
+			) : !isEmpty ? (
 				createdProfile ? (
 					<Home />
 				) : (

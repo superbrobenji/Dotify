@@ -4,6 +4,7 @@ import {
 	UPLOAD_IMAGE_ERROR,
 	UPLOAD_USER_ERROR,
 	UPLOAD_USER,
+	LOADING_IMAGE,
 } from './types';
 import axios from 'axios';
 import firebase from '../services/firebase';
@@ -11,7 +12,7 @@ import firebase from '../services/firebase';
 export const uploadArtistImage = (image, uid) => async dispatch => {
 	let imgurl = '';
 	dispatch({
-		type: LOADING_ARTIST,
+		type: LOADING_IMAGE,
 	});
 	console.log(image, uid);
 

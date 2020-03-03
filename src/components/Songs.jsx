@@ -7,6 +7,7 @@ import Navigation from './Navigation';
 import { uploadSong } from '../actions/songs';
 import { uploadAlbumImage } from '../actions/albums';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,6 +17,9 @@ const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
 	createdProfile: state.user.createdProfile,
 	songs: state.songs,
+	isLoadingImage: state.user.isLoadingImage,
+	userAlbums: state.user.albums,
+	publicAlbums: state.albums.arr,
 });
 
 const useStyles = makeStyles({
@@ -78,6 +82,8 @@ const Songs = props => {
 		const image = event.target.files[0];
 
 		console.log('triggering redux');
+
+		//TODO change loading anim
 		props.uploadAlbumImage(
 			image,
 			props.location.state.currentAlbum.id,
@@ -99,11 +105,24 @@ const Songs = props => {
 		<div>
 			<Navigation />
 			<div>
-				<img
-					src={props.location.state.currentAlbum.coverImage}
-					alt='coverArt'
-					style={{ hight: '200px', width: '200px' }}
-				/>
+				{console.log(
+					`user albums: ${props.userAlbums} public albums: ${props.publicAlbums} is user album: ${props.location.state.userAlbum} current album pos: ${props.location.state.currentAlbumPos}`,
+				)}
+				{!props.isLoadingImage ? (
+					<img
+						src={
+							props.location.state.userAlbum
+								? props.userAlbums[props.location.state.currentAlbumPos]
+										.coverImage
+								: props.publicAlbums[props.location.state.currentAlbumPos]
+										.coverImage
+						}
+						alt='coverArt'
+						style={{ hight: '200px', width: '200px' }}
+					/>
+				) : (
+					<CircularProgress />
+				)}
 			</div>
 			{props.location.state.uid === props.location.state.currentAlbum.artist ? (
 				<div>

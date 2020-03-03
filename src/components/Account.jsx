@@ -29,13 +29,21 @@ const Account = props => {
 	useEffect(() => {
 		if (props.user.albums.length !== 0) {
 			let albumsComponents = [];
+			let i = 0;
 			props.user.albums.forEach(album => {
 				albumsComponents.push(
 					<li key={album.id} className={classes.albumCard}>
-						<AlbumCard album={album} uid={props.uid} key={album.id} />
+						<AlbumCard
+							album={album}
+							albumPos={i}
+							uid={props.uid}
+							key={album.id}
+							userAlbums={true}
+						/>
 					</li>,
 				);
 				handleAlbums(albumsComponents);
+				i++;
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

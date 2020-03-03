@@ -12,13 +12,13 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import Loader from './Loader';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
 	imageUrl: state.user.imageUrl,
 	uid: state.firebaseReducer.auth.uid,
-	isloading: state.user.isLoading,
+	isLoadingImage: state.user.isLoadingImage,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -51,8 +51,8 @@ const CreateAccount = props => {
 				<Card className={classes.card}>
 					<CardContent className={classes.cardContent}>
 						<div className={classes.cardContent}>
-							{props.isLoading ? (
-								<Loader />
+							{props.isLoadingImage ? (
+								<CircularProgress />
 							) : (
 								<Avatar
 									style={{ width: '6rem', height: '6rem' }}

@@ -47,7 +47,12 @@ const AlbumCard = props => {
 	const handleCardClick = () => {
 		history.push({
 			pathname: '/songs',
-			state: { uid: props.uid, currentAlbum: props.album },
+			state: {
+				uid: props.uid,
+				currentAlbum: props.album,
+				currentAlbumPos: props.albumPos,
+				userAlbum: props.userAlbums,
+			},
 		});
 		props.getAlbumSongs(props.uid, props.album);
 	};

@@ -40,7 +40,7 @@ const SignUp = props => {
 	};
 
 	const handleClickShowPasswordVer = () => {
-		setValues({ ...values, showPasswordVer: !values.showPassword });
+		setValues({ ...values, showPasswordVer: !values.showPasswordVer });
 	};
 
 	const handleMouseDownPassword = event => {
@@ -49,7 +49,9 @@ const SignUp = props => {
 
 	const signUp = () => {
 		if (values.password === values.passwordVer) {
-			props.signup(values.email, values.password).then(history.push('/signin'));
+			props
+				.signup(values.email, values.password)
+				.then(history.push('/createaccount'));
 		} else {
 			console.log('passwords did not match');
 		}
@@ -116,7 +118,7 @@ const SignUp = props => {
 												onClick={handleClickShowPasswordVer}
 												onMouseDown={handleMouseDownPassword}
 											>
-												{values.showPassword ? (
+												{values.showPasswordVer ? (
 													<Visibility />
 												) : (
 													<VisibilityOff />

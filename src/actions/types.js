@@ -14,6 +14,7 @@ export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const LOADING_ARTIST = 'LOADING_ARTIST';
 export const LOADING_FINISH = 'LOADING_FINISH';
 export const UPLOAD_IMAGE_ERROR = 'UPLOAD_IMAGE_ERROR';
+export const LOADING_IMAGE = 'LOADING_IMAGE';
 
 export const LOAD_USER = 'LOAD_USER';
 export const UPLOAD_USER = 'UPLOAD_USER';

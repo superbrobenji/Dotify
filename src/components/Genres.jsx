@@ -37,6 +37,7 @@ const Genres = props => {
 				});
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.genres, props.uid]);
 
 	const [genresComp, setGenresComp] = useState();
