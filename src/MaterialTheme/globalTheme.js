@@ -90,6 +90,12 @@ export const useStyles = makeStyles(theme => ({
 		alignItems: 'center',
 		marginTop: '5rem',
 	},
+	genreCard: {
+		width: 'auto',
+		height: '4rem',
+		display: 'flex',
+		justifyContent: 'center',
+	},
 	AccountAlbums: {
 		display: 'flex',
 		flexDirection: 'column',

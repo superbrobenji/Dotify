@@ -30,7 +30,7 @@ const ArtistCard = props => {
 	};
 	return (
 		<ThemeProvider theme={theme}>
-			<Card className={classes.card} onClick={handleCardClick}>
+			<Card className={classes.templateCards} onClick={handleCardClick}>
 				<CardContent className={classes.cardContent}>
 					<div>
 						<img
