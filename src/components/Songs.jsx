@@ -79,26 +79,26 @@ const Songs = props => {
 	};
 
 	const handleImageChange = async event => {
-		const image = event.target.files[0];
-
-		console.log('triggering redux');
-
-		//TODO change loading anim
-		props.uploadAlbumImage(
-			image,
-			props.location.state.currentAlbum.id,
-			props.location.state.uid,
-		);
+		if (event.target.files[0]) {
+			const image = event.target.files[0];
+			props.uploadAlbumImage(
+				image,
+				props.location.state.currentAlbum.id,
+				props.location.state.uid,
+			);
+		}
 	};
 
 	const handleSongChange = async event => {
-		const song = event.target.files[0];
+		if (event.target.files[0]) {
+			const song = event.target.files[0];
 
-		props.uploadSong(
-			song,
-			props.location.state.currentAlbum.id,
-			props.location.state.uid,
-		);
+			props.uploadSong(
+				song,
+				props.location.state.currentAlbum.id,
+				props.location.state.uid,
+			);
+		}
 	};
 
 	return (
@@ -156,11 +156,11 @@ const Songs = props => {
 					<input
 						accept='audio/*'
 						className={classes.input}
-						id='contained-button-file'
+						id='contained-button-audio'
 						type='file'
 						onChange={handleSongChange}
 					/>
-					<label htmlFor='contained-button-file'>
+					<label htmlFor='contained-button-audio'>
 						<Button variant='contained' color='primary' component='span'>
 							Upload song
 						</Button>

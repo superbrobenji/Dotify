@@ -121,16 +121,18 @@ const Navigation = props => {
 	};
 
 	return (
-		<div className={classes.button}>
-			<Card>
-				<Button onClick={toggleDrawer('left', true)}>
-					<MenuIcon fontSize='large' />
-				</Button>
-			</Card>
-			<Drawer open={state.left} onClose={toggleDrawer('left', false)}>
-				{sideList('left')}
-			</Drawer>
-		</div>
+		<React.Fragment>
+			<div className={classes.button}>
+				<Card>
+					<Button onClick={toggleDrawer('left', true)}>
+						<MenuIcon fontSize='large' />
+					</Button>
+				</Card>
+				<Drawer open={state.left} onClose={toggleDrawer('left', false)}>
+					{sideList('left')}
+				</Drawer>
+			</div>
+		</React.Fragment>
 	);
 };
 export default connect(null, mapDispatchToProps)(Navigation);

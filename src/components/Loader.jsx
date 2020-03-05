@@ -9,7 +9,7 @@ const Loader = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<div className={classes.body}>
+			<div className={classes.bodyNoNav}>
 				<div className={styles.ldsripple}>
 					<div></div>
 					<div></div>

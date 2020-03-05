@@ -37,14 +37,39 @@ export const useStyles = makeStyles(theme => ({
 		alignItems: 'center',
 		flexDirection: 'column',
 		justifyContent: 'center',
+		textAlign: 'center',
 	},
-	body: {
+	bodyContent: {
 		display: 'flex',
 		flexWrap: 'wrap',
 		justifyContent: 'center',
 		alignItems: 'center',
 		width: '100%',
+		height: 'calc(100% - 5rem)',
+	},
+	body: {
+		width: '100%',
 		height: '100vh',
+		margin: '0',
+		padding: '0',
+	},
+	bodyNoNav: {
+		width: '100%',
+		height: '100vh',
+		margin: '0',
+		padding: '0',
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	templateCards: {
+		width: '15rem',
+		height: '25rem',
+	},
+	coverImage: {
+		hight: '150px',
+		width: '150px',
 	},
 	margin: {
 		margin: theme.spacing(2),
@@ -56,7 +81,7 @@ export const useStyles = makeStyles(theme => ({
 		width: 200,
 	},
 	button: {
-		margin: '1rem',
+		padding: '1rem',
 	},
 	accountView: {
 		display: 'flex',

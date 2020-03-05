@@ -3,32 +3,10 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getArtistAlbums } from '../actions/albums';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
-const useStyles = makeStyles({
-	root: {
-		minWidth: 275,
-		width: '200px',
-		height: '400px',
-		marginTop: '2rem',
-	},
-	bullet: {
-		display: 'inline-block',
-		margin: '0 2px',
-		transform: 'scale(0.8)',
-	},
-	title: {
-		fontSize: 14,
-	},
-	pos: {
-		marginBottom: 12,
-	},
-	input: {
-		display: 'none',
-	},
-});
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -51,22 +29,24 @@ const ArtistCard = props => {
 		props.getArtistAlbums(props.artist.uid);
 	};
 	return (
-		<Card className={classes.root} onClick={handleCardClick}>
-			<CardContent>
-				<div>
-					<img
-						src={props.artist.imageUrl}
-						alt='profile'
-						style={{ hight: '200px', width: '200px' }}
-					/>
-				</div>
-				<div>
-					<h2>
-						{props.artist.artistName} {props.artist.artistSurname}
-					</h2>
-				</div>
-			</CardContent>
-		</Card>
+		<ThemeProvider theme={theme}>
+			<Card className={classes.card} onClick={handleCardClick}>
+				<CardContent className={classes.cardContent}>
+					<div>
+						<img
+							src={props.artist.imageUrl}
+							alt='profile'
+							className={classes.coverImage}
+						/>
+					</div>
+					<div>
+						<h2>
+							{props.artist.artistName} {props.artist.artistSurname}
+						</h2>
+					</div>
+				</CardContent>
+			</Card>
+		</ThemeProvider>
 	);
 };
 

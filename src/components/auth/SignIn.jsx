@@ -77,7 +77,7 @@ const SignIn = props => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<div className={classes.body}>
+			<div className={classes.bodyNoNav}>
 				<Card className={classes.card}>
 					<CardContent>
 						<div className={classes.cardContent}>

@@ -41,13 +41,15 @@ const CreateAccount = props => {
 	};
 
 	const handleImageChange = async event => {
-		const image = event.target.files[0];
+		if (event.target.files[0]) {
+			const image = event.target.files[0];
 
-		props.uploadArtistImage(image, props.uid);
+			props.uploadArtistImage(image, props.uid);
+		}
 	};
 	return (
 		<ThemeProvider theme={theme}>
-			<div className={classes.body}>
+			<div className={classes.bodyNoNav}>
 				<Card className={classes.card}>
 					<CardContent className={classes.cardContent}>
 						<div className={classes.cardContent}>
