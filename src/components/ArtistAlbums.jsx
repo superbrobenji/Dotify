@@ -23,7 +23,6 @@ const ArtistAlbums = props => {
 		if (props.albums.arr !== undefined) {
 			if (props.albums.arr.length !== 0) {
 				let albumsComponents = [];
-				console.log(props.albums);
 				let i = 0;
 				props.albums.arr.forEach(album => {
 					albumsComponents.push(

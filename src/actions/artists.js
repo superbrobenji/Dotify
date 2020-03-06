@@ -15,7 +15,6 @@ export const getAllArtists = () => async dispatch => {
 			'https://us-central1-dotify-eb26e.cloudfunctions.net/api/getallartists',
 		)
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_ALL_ARTISTS, payload: [...res.data] });
 			dispatch({
 				type: LOADING_FINISH,

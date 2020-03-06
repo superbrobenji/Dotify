@@ -22,7 +22,6 @@ const Artists = props => {
 		if (props.artists.arr !== undefined) {
 			if (props.artists.arr.length !== 0) {
 				let artistsComponents = [];
-				console.log(props.artists);
 				props.artists.arr.forEach(artist => {
 					artistsComponents.push(
 						<li key={artist.uid} className={classes.albumCard}>

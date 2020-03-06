@@ -14,7 +14,6 @@ export const uploadArtistImage = (image, uid) => async dispatch => {
 	dispatch({
 		type: LOADING_IMAGE,
 	});
-	console.log(image, uid);
 
 	const storageRef = firebase.storage().ref();
 
@@ -28,7 +27,6 @@ export const uploadArtistImage = (image, uid) => async dispatch => {
 		.then(snap => {
 			snap.ref.getDownloadURL().then(url => {
 				imgurl = url;
-				console.log(url);
 				axios
 					.post(
 						`https://us-central1-dotify-eb26e.cloudfunctions.net/api/uploadArtistImage`,
@@ -49,7 +47,6 @@ export const uploadArtistImage = (image, uid) => async dispatch => {
 };
 
 export const uploadUserData = (userData, callback) => async dispatch => {
-	console.log(userData);
 	dispatch({
 		type: LOADING_ARTIST,
 	});

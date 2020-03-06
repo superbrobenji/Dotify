@@ -27,7 +27,6 @@ export const getGenreAlbums = genre => async dispatch => {
 			{ params: { genre: genre } },
 		)
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_GENRE_ALBUMS, payload: res.data });
 			dispatch({
 				type: LOADING_FINISH,
@@ -42,7 +41,6 @@ export const getGenreAlbums = genre => async dispatch => {
 };
 
 export const uploadAlbum = (albumData, albums) => async dispatch => {
-	console.log(albumData);
 	dispatch({
 		type: LOADING_ARTIST,
 	});
@@ -74,7 +72,6 @@ export const uploadAlbumImage = (
 	dispatch({
 		type: LOADING_IMAGE,
 	});
-	console.log(image, uid);
 
 	const storageRef = firebase.storage().ref();
 
@@ -90,7 +87,6 @@ export const uploadAlbumImage = (
 		.then(snap => {
 			snap.ref.getDownloadURL().then(url => {
 				imgurl = url;
-				console.log(url);
 				axios
 					.post(
 						`https://us-central1-dotify-eb26e.cloudfunctions.net/api/uploadAlbumImage`,
@@ -117,7 +113,6 @@ export const uploadAlbumImage = (
 				{ params: { uid: uid } },
 			)
 			.then(res => {
-				console.log(res.data);
 				dispatch({ type: LOAD_USER_ALBUMS, payload: res.data });
 			});
 	};
@@ -130,7 +125,6 @@ export const getAllAlbums = () => async dispatch => {
 	axios
 		.get('https://us-central1-dotify-eb26e.cloudfunctions.net/api/getallalbums')
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_ALL_ALBUMS, payload: [...res.data] });
 			dispatch({
 				type: LOADING_FINISH,
@@ -149,7 +143,6 @@ export const getArtistAlbums = uid => async dispatch => {
 			{ params: { uid: uid } },
 		)
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_ARTIST_ALBUMS, payload: res.data });
 			dispatch({
 				type: LOADING_FINISH,

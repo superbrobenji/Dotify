@@ -27,7 +27,6 @@ const Genres = props => {
 			if (props.genres.arr.length !== 0) {
 				let genresComponents = [];
 				props.genres.arr.forEach(genre => {
-					console.log(genre);
 					genresComponents.push(
 						<li key={genre} className={classes.albumCard}>
 							<GenreCard genre={genre} uid={props.uid} key={genre} />

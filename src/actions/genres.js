@@ -13,7 +13,6 @@ export const getAllGenres = () => async dispatch => {
 	axios
 		.get('https://us-central1-dotify-eb26e.cloudfunctions.net/api/getallgenres')
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_ALL_GENRES, payload: res.data });
 			dispatch({
 				type: LOADING_FINISH,

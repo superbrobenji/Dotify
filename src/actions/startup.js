@@ -38,7 +38,6 @@ export const startup = uid => async dispatch => {
 			{ params: { uid: uid } },
 		)
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_USER_ALBUMS, payload: res.data });
 		});
 };

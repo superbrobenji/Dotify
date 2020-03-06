@@ -13,14 +13,12 @@ export const getAlbumSongs = (uid, currentAlbum) => async dispatch => {
 	dispatch({
 		type: LOADING_ARTIST,
 	});
-	console.log(currentAlbum.id);
 	axios
 		.get(
 			'https://us-central1-dotify-eb26e.cloudfunctions.net/api/getalbumsongs',
 			{ params: { currentAlbumID: currentAlbum.id } },
 		)
 		.then(res => {
-			console.log(res.data);
 			dispatch({ type: LOAD_SONGS, payload: res.data });
 			dispatch({
 				type: LOADING_FINISH,
@@ -39,7 +37,6 @@ export const uploadSong = (song, currentAlbum, uid) => async dispatch => {
 	dispatch({
 		type: LOADING_ARTIST,
 	});
-	console.log(song, uid);
 
 	const storageRef = firebase.storage().ref();
 
@@ -54,7 +51,6 @@ export const uploadSong = (song, currentAlbum, uid) => async dispatch => {
 			snap.ref.getDownloadURL().then(url => {
 				const songName = song.name;
 				songUrl = url;
-				console.log(url);
 				axios
 					.post(
 						`https://us-central1-dotify-eb26e.cloudfunctions.net/api/uploadsong`,
@@ -81,7 +77,6 @@ export const uploadSong = (song, currentAlbum, uid) => async dispatch => {
 				{ params: { currentAlbumID: currentAlbum } },
 			)
 			.then(res => {
-				console.log(res.data);
 				dispatch({ type: LOAD_SONGS, payload: res.data });
 				dispatch({
 					type: LOADING_FINISH,

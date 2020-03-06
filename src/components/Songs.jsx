@@ -52,6 +52,7 @@ const Songs = props => {
 				handleState(songComponents);
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [classes.root, props.songs]);
 
 	const handleState = song => {

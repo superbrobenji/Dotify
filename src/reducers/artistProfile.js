@@ -36,7 +36,6 @@ export default (state = {}, action) => {
 				surname: action.payload.userSurname,
 			};
 		case LOAD_USER_ALBUMS:
-			console.log(action.payload);
 			return {
 				...state,
 				albums: action.payload,
