@@ -16,6 +16,7 @@ import {
 	UPLOAD_ALBUM_IMAGE,
 	UPLOAD_ALBUM_IMAGE_ERROR,
 	LOADING_FINISH,
+	LOADING_IMAGE,
 } from '../actions/types';
 
 export default (state = {}, action) => {
@@ -30,7 +31,6 @@ export default (state = {}, action) => {
 			return {
 				...state,
 				imageUrl: action.payload.artistImage,
-				isLoading: false,
 				createdProfile: action.payload.accountCreated,
 				name: action.payload.userName,
 				surname: action.payload.userSurname,
@@ -41,22 +41,26 @@ export default (state = {}, action) => {
 				...state,
 				albums: action.payload,
 				isLoading: false,
+				isLoadingImage: false,
 			};
 		case UPLOAD_ALBUM_IMAGE:
 			return {
 				...state,
-				isLoading: false,
 			};
 		case UPLOAD_ALBUM_IMAGE_ERROR:
 			return {
 				...state,
-				isLoading: false,
+				isLoadingImage: false,
 			};
 		case UPLOAD_IMAGE:
 			return {
 				...state,
 				imageUrl: action.payload,
-				isLoading: false,
+				isLoadingImage: false,
+			};
+		case LOADING_IMAGE:
+			return {
+				isLoadingImage: true,
 			};
 		case UPLOAD_USER:
 			return {
@@ -75,7 +79,7 @@ export default (state = {}, action) => {
 		case UPLOAD_IMAGE_ERROR:
 			return {
 				...state,
-				isLoading: false,
+				isLoadingImage: false,
 			};
 		case UPLOAD_USER_ERROR:
 			return {

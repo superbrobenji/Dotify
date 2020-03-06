@@ -5,42 +5,29 @@ import requireAuth from './hoc/requireAuth';
 import ReactAudioPlayer from 'react-audio-player';
 import Navigation from './Navigation';
 import { uploadSong } from '../actions/songs';
+import { uploadAlbumImage } from '../actions/albums';
 
-import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import { ThemeProvider } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
 	createdProfile: state.user.createdProfile,
 	songs: state.songs,
-});
-
-const useStyles = makeStyles({
-	root: {
-		minWidth: 275,
-		width: '325px',
-		height: '130px',
-		marginTop: '2rem',
-	},
-	bullet: {
-		display: 'inline-block',
-		margin: '0 2px',
-		transform: 'scale(0.8)',
-	},
-	title: {
-		fontSize: 14,
-	},
-	pos: {
-		marginBottom: 12,
-	},
-	input: {
-		display: 'none',
-	},
+	isLoadingImage: state.user.isLoadingImage,
+	userAlbums: state.user.albums,
+	publicAlbums: state.albums.arr,
 });
 
 const mapDispatchToProps = dispatch => ({
+	uploadAlbumImage: (image, currnetAlbum, uid) =>
+		dispatch(uploadAlbumImage(image, currnetAlbum, uid)),
 	uploadSong: (song, currnetAlbum, uid) =>
 		dispatch(uploadSong(song, currnetAlbum, uid)),
 });
@@ -50,58 +37,126 @@ const Songs = props => {
 	const [songComps, setSongComps] = useState([]);
 	useEffect(() => {
 		let songComponents = [];
-		props.songs.forEach(song => {
-			songComponents.push(
-				<li key={song.id}>
-					<Card className={classes.root}>
-						<CardContent>
-							<p>{song.songName}</p>
-							<ReactAudioPlayer src={song.songUrl} controls />
-						</CardContent>
-					</Card>
-				</li>,
-			);
-			handleState(songComponents);
-		});
+		if (props.songs.length !== 0) {
+			props.songs.forEach(song => {
+				songComponents.push(
+					<li key={song.id} className={classes.albumCard}>
+						<Card className={classes.card}>
+							<CardContent className={classes.cardContent}>
+								<p>{song.songName}</p>
+								<ReactAudioPlayer src={song.songUrl} controls />
+							</CardContent>
+						</Card>
+					</li>,
+				);
+				handleState(songComponents);
+			});
+		}
 	}, [classes.root, props.songs]);
 
 	const handleState = song => {
 		setSongComps(song);
 	};
 
-	const handleSongChange = async event => {
-		const song = event.target.files[0];
+	const handleImageChange = async event => {
+		if (event.target.files[0]) {
+			const image = event.target.files[0];
+			props.uploadAlbumImage(
+				image,
+				props.location.state.currentAlbum.id,
+				props.location.state.uid,
+			);
+		}
+	};
 
-		props.uploadSong(
-			song,
-			props.location.state.currentAlbum.id,
-			props.location.state.uid,
-		);
+	const handleSongChange = async event => {
+		if (event.target.files[0]) {
+			const song = event.target.files[0];
+
+			props.uploadSong(
+				song,
+				props.location.state.currentAlbum.id,
+				props.location.state.uid,
+			);
+		}
 	};
 
 	return (
-		<div>
+		<ThemeProvider theme={theme}>
 			<Navigation />
-			{props.location.state.uid === props.location.state.currentAlbum.artist ? (
-				<div>
-					<input
-						accept='audio/*'
-						className={classes.input}
-						id='contained-button-file'
-						type='file'
-						onChange={handleSongChange}
-					/>
-					<label htmlFor='contained-button-file'>
-						<Button variant='contained' color='primary' component='span'>
-							Upload song
-						</Button>
-					</label>
+			<div>
+				<div className={classes.songAlbumView}>
+					<div className={classes.songAlbumIcon}>
+						{!props.isLoadingImage ? (
+							<img
+								className={classes.songAlbumImg}
+								src={
+									props.location.state.userAlbum
+										? props.userAlbums[props.location.state.currentAlbumPos]
+												.coverImage
+										: props.publicAlbums[props.location.state.currentAlbumPos]
+												.coverImage
+								}
+								alt='coverArt'
+							/>
+						) : (
+							<CircularProgress />
+						)}
+
+						{props.location.state.uid ===
+						props.location.state.currentAlbum.artist ? (
+							<div>
+								<input
+									accept='image/*'
+									className={classes.input}
+									id='contained-button-file'
+									type='file'
+									onChange={handleImageChange}
+								/>
+								<label htmlFor='contained-button-file'>
+									<IconButton color='primary' component='span'>
+										<EditIcon />
+									</IconButton>
+								</label>
+							</div>
+						) : (
+							<div></div>
+						)}
+						<div className={classes.songAlbumInfo}>
+							<div>
+								<h2>{props.location.state.currentAlbum.albumName}</h2>
+							</div>
+							<div>
+								<p>artist: {props.location.state.currentAlbum.artistName}</p>
+								<p>genre: {props.location.state.currentAlbum.genre}</p>{' '}
+								<p>Songs: {props.location.state.currentAlbum.songCount}</p>
+							</div>
+						</div>
+					</div>
+
+					{props.location.state.uid ===
+					props.location.state.currentAlbum.artist ? (
+						<div>
+							<input
+								accept='audio/*'
+								className={classes.input}
+								id='contained-button-audio'
+								type='file'
+								onChange={handleSongChange}
+							/>
+							<label htmlFor='contained-button-audio'>
+								<Button variant='contained' color='primary' component='span'>
+									Upload song
+								</Button>
+							</label>
+						</div>
+					) : (
+						<div></div>
+					)}
+					<ul className={classes.AccountAlbumList}>{songComps}</ul>
 				</div>
-			) : (
-				<div></div>
-			)}
-			<ul>{songComps}</ul>
-		</div>
+			</div>
+		</ThemeProvider>
 	);
 };
 
