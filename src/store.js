@@ -18,6 +18,10 @@ export default () => {
 		throttle(() => {
 			saveState({
 				user: store.getState().user,
+				albums: store.getState().albums,
+				artists: store.getState().artists,
+				genres: store.getState().genres,
+				songs: store.getState().songs,
 			});
 		}, 1000),
 	);

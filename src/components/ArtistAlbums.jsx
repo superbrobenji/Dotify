@@ -5,6 +5,8 @@ import AlbumCard from '../templates/AlbumCard';
 import Navigation from './Navigation';
 
 import Avatar from '@material-ui/core/Avatar';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -15,7 +17,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({});
 
 const ArtistAlbums = props => {
-	console.log(props.location.state.currentuser);
+	const classes = useStyles();
+
 	useEffect(() => {
 		if (props.albums.arr !== undefined) {
 			if (props.albums.arr.length !== 0) {
@@ -24,7 +27,7 @@ const ArtistAlbums = props => {
 				let i = 0;
 				props.albums.arr.forEach(album => {
 					albumsComponents.push(
-						<li key={album.id}>
+						<li key={album.id} className={classes.albumCard}>
 							<AlbumCard
 								album={album}
 								albumPos={i}
@@ -39,6 +42,7 @@ const ArtistAlbums = props => {
 				});
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.albums, props.uid]);
 
 	const [albumsComp, setAlbumsComp] = useState();
@@ -48,16 +52,28 @@ const ArtistAlbums = props => {
 	};
 
 	return (
-		<div>
+		<ThemeProvider theme={theme}>
 			<Navigation />
 			<div>
-				<Avatar alt='' src={props.location.state.currentuser.imageUrl} />
-				<h3>{props.location.state.currentuser.artistName}</h3>
-				<h3>{props.location.state.currentuser.artistSurname}</h3>
+				<div className={classes.accountView}>
+					<div className={classes.accountIcon}>
+						<Avatar
+							style={{ width: '8rem', height: '8rem' }}
+							alt=''
+							src={props.location.state.currentuser.imageUrl}
+						/>
+					</div>
+					<div className={classes.accountDetails}>
+						<h3>{props.location.state.currentuser.artistName}</h3>
+						<h3>{props.location.state.currentuser.artistSurname}</h3>
+					</div>
+				</div>
+				<div className={classes.AccountAlbums}>
+					<h2>Albums</h2>
+					<ul className={classes.AccountAlbumList}>{albumsComp} </ul>
+				</div>
 			</div>
-			<h2>Albums</h2>
-			{albumsComp}
-		</div>
+		</ThemeProvider>
 	);
 };
 

@@ -96,6 +96,28 @@ export const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		justifyContent: 'center',
 	},
+	songAlbumView: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: '5rem',
+	},
+	songAlbumInfo: {
+		flexDirection: 'column',
+		display: 'flex',
+		justifyContent: 'center',
+	},
+	songAlbumIcon: {
+		display: 'flex',
+		flexDirection: 'row',
+		objectFit: 'fill',
+		paddingBottom: '3rem',
+	},
+	songAlbumImg: {
+		width: '300px',
+		height: '300px',
+	},
 	AccountAlbums: {
 		display: 'flex',
 		flexDirection: 'column',
