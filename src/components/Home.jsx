@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { dummyAction } from '../actions/dummyAction';
 import requireAuth from './hoc/requireAuth';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
+
 import Navigation from './Navigation';
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -14,14 +17,18 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Home = props => {
+	const classes = useStyles();
+
 	// useEffect(() => {
 	// 	if (props.createdProfile === false) history.push('/createaccount');
 	// }, [props.createdProfile, history]);
 
 	return (
-		<div>
-			<Navigation /> this is Home
-		</div>
+		<ThemeProvider theme={theme}>
+			<div className={classes.body}>
+				<Navigation /> <div className={classes.bodyContent}>this is Home</div>
+			</div>
+		</ThemeProvider>
 	);
 };
 

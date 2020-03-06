@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import requireAuth from './hoc/requireAuth';
 import AlbumCard from '../templates/AlbumCard';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
+
 import Navigation from './Navigation';
 
 const mapStateToProps = state => ({
@@ -14,21 +17,32 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({});
 
 const Albums = props => {
+	const classes = useStyles();
+
 	useEffect(() => {
 		if (props.albums.arr !== undefined) {
 			if (props.albums.arr.length !== 0) {
 				let albumsComponents = [];
 				console.log(props.albums);
+				let i = 0;
 				props.albums.arr.forEach(album => {
 					albumsComponents.push(
-						<li key={album.id}>
-							<AlbumCard album={album} uid={props.uid} key={album.id} />
+						<li key={album.id} className={classes.albumCard}>
+							<AlbumCard
+								album={album}
+								albumPos={i}
+								uid={props.uid}
+								key={album.id}
+								userAlbums={false}
+							/>
 						</li>,
 					);
 					handleAlbums(albumsComponents);
+					i++;
 				});
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.albums, props.uid]);
 
 	const [albumsComp, setAlbumsComp] = useState();
@@ -38,9 +52,12 @@ const Albums = props => {
 	};
 
 	return (
-		<div>
-			<Navigation /> {albumsComp}
-		</div>
+		<ThemeProvider theme={theme}>
+			<div>
+				<Navigation />{' '}
+				<ul className={classes.AccountAlbumList}>{albumsComp}</ul>
+			</div>
+		</ThemeProvider>
 	);
 };
 

@@ -12,6 +12,7 @@ import {
 	LOAD_ARTIST_ALBUMS_ERROR,
 	LOAD_GENRE_ALBUMS,
 	LOAD_GENRE_ALBUMS_ERROR,
+	LOADING_IMAGE,
 } from './types';
 import axios from 'axios';
 import firebase from '../services/firebase';
@@ -71,7 +72,7 @@ export const uploadAlbumImage = (
 ) => async dispatch => {
 	let imgurl = '';
 	dispatch({
-		type: LOADING_ARTIST,
+		type: LOADING_IMAGE,
 	});
 	console.log(image, uid);
 

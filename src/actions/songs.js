@@ -13,6 +13,7 @@ export const getAlbumSongs = (uid, currentAlbum) => async dispatch => {
 	dispatch({
 		type: LOADING_ARTIST,
 	});
+	console.log(currentAlbum.id);
 	axios
 		.get(
 			'https://us-central1-dotify-eb26e.cloudfunctions.net/api/getalbumsongs',

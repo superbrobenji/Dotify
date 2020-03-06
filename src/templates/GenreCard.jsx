@@ -3,32 +3,10 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getGenreAlbums } from '../actions/albums';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useStyles, theme } from '../MaterialTheme/globalTheme';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
-const useStyles = makeStyles({
-	root: {
-		minWidth: 275,
-		width: '150px',
-		height: '80px',
-		marginTop: '2rem',
-	},
-	bullet: {
-		display: 'inline-block',
-		margin: '0 2px',
-		transform: 'scale(0.8)',
-	},
-	title: {
-		fontSize: 14,
-	},
-	pos: {
-		marginBottom: 12,
-	},
-	input: {
-		display: 'none',
-	},
-});
 
 const mapStateToProps = state => ({
 	isLoaded: state.firebaseReducer.auth.isLoaded,
@@ -51,13 +29,15 @@ const GenreCard = props => {
 		props.getGenreAlbums(props.genre);
 	};
 	return (
-		<Card className={classes.root} onClick={handleCardClick}>
-			<CardContent>
-				<div>
-					<h2>{props.genre}</h2>
-				</div>
-			</CardContent>
-		</Card>
+		<ThemeProvider theme={theme}>
+			<Card className={classes.genreCard} onClick={handleCardClick}>
+				<CardContent className={classes.cardContent}>
+					<div>
+						<h2>{props.genre}</h2>
+					</div>
+				</CardContent>
+			</Card>
+		</ThemeProvider>
 	);
 };
 
